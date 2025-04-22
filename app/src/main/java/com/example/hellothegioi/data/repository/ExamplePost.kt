@@ -12,26 +12,39 @@ object ExamplePost{
             title = "Welcome to the Forum!",
             text = "This is our first post. Let's build a great community together!",
             image = R.drawable.image_test,
-            isDraft = false,
-            onClick = { println("Post 1 clicked") },
-            onMore = { println("More options") },
-            onLike = { println("Liked") },
-            onComment = { println("Commented") },
-            onShare = { println("Shared") }
+            isDraft = false
         ),
         Post(
             avatar = R.drawable.ic_user_avatar,
-            ownerName = "John Smith",
+            ownerName = "Davit",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
-            title = "Hello World!",
-            text = "The First Post!",
+            title = "Today's question!",
+            text = "What can you never see but is constantly right in front of you?",
+            isDraft = false
+        ),
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "Trần Công",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            text = "Mọi người cho mình hỏi 1 số trung tâm tiếng anh uy tín với ạ!",
             image = R.drawable.image_test,
-            isDraft = false,
-            onClick = { println("Post 1 clicked") },
-            onMore = { println("More options") },
-            onLike = { println("Liked") },
-            onComment = { println("Commented") },
-            onShare = { println("Shared") }
+            isDraft = false
+        ),
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "Cô Mai Phương",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            title = "Answer the question",
+            text = "She _____ to Nha Trang every summer.\nA.goes\nB.went\nC.will go\nD.is going",
+            isDraft = false
+        ),
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "Michael",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            text = "I am lazy to learn English",
+            image = R.drawable.image_test,
+            isDraft = false
         )
     )
 

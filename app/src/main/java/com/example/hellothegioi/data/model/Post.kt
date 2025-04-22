@@ -1,10 +1,14 @@
 package com.example.hellothegioi.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Post(
     val avatar: Int,
     val ownerName: String,
     val postTimeMillis: Long = 0,
-    val title: String,
+    val title: String = "",
     val text: String,
     val image: Int? = null,
     val isDraft: Boolean = false,
@@ -16,4 +20,4 @@ data class Post(
     val onLike: () -> Unit = {},
     val onComment: () -> Unit = {},
     val onShare: () -> Unit = {}
-)
+): Parcelable

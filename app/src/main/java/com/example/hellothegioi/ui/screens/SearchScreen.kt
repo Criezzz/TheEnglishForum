@@ -13,7 +13,6 @@ import com.example.hellothegioi.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.font.FontWeight
-import com.example.hellothegioi.ui.navigation.BottomNavigationBar
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable

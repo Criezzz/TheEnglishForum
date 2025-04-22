@@ -26,7 +26,7 @@ import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import androidx. compose. foundation. shape. RoundedCornerShape
 
 @Composable
-fun PostItemHorizontal(post: Post, modifier: Modifier = Modifier) {
+fun PostItemHorizontal(post: Post, modifier: Modifier = Modifier, onNavigateToComment: (Post) -> Unit) {
     Column(modifier = Modifier.padding(16.dp)) {
         // Top Row: Avatar, Owner Name, and Date + More Icon
         Row(
@@ -125,7 +125,9 @@ fun PostItemHorizontal(post: Post, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.width(64.dp))
 
-            ActionWithIcon(R.drawable.ic_comment, "${post.comments}", Color.Gray) { post.onComment() }
+            ActionWithIcon(R.drawable.ic_comment, "${post.comments}", Color.Gray) {
+                onNavigateToComment(post)
+            }
 
             Spacer(modifier = Modifier.width(64.dp))
 
@@ -161,11 +163,11 @@ fun getTimeAgo(postTime: Long): String {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PostItemHorizontalPreview() {
-    HellothegioiTheme {
-        PostItemHorizontal(post = ExamplePost.getAll().get(0))
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PostItemHorizontalPreview() {
+//    HellothegioiTheme {
+//        PostItemHorizontal(post = ExamplePost.getAll().get(0))
+//    }
+//}
 
