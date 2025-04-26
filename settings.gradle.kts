@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "hellothegioi"
+rootProject.name = "Qdaily"
 include(":app")
  

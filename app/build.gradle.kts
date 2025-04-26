@@ -2,16 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-parcelize")
 }
 
 android {
-    namespace = "com.example.hellothegioi"
+    namespace = "com.example.qdaily"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.hellothegioi"
-        minSdk = 28
+        applicationId = "com.example.qdaily"
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -50,10 +49,16 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    //load image
-    implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation ("androidx.navigation:navigation-compose:2.7.7")
 
+    // ✅ Dòng cần thêm để dùng viewModel() trong Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.firestore.ktx)
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.androidx.room.runtime.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
