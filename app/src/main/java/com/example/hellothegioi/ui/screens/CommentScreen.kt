@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.hellothegioi.data.model.*
 import com.example.hellothegioi.ui.componets.*
 import com.example.hellothegioi.R
-import androidx. compose. ui. graphics. Color
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview

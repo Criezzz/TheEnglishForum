@@ -1,5 +1,6 @@
 package com.example.hellothegioi
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,9 +14,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hellothegioi.data.model.Post
+import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.ui.navigation.BottomNavigationBar
+import com.example.hellothegioi.ui.screens.CommentScreen
+import com.example.hellothegioi.ui.screens.HomeScreen
+import com.example.hellothegioi.ui.screens.NewPostScreen
+import com.example.hellothegioi.ui.screens.NotificationScreen
+import com.example.hellothegioi.ui.screens.ProfileScreen
+import com.example.hellothegioi.ui.screens.QuestionScreen
+import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
-import com.example.hellothegioi.ui.screens.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,10 +34,26 @@ class MainActivity : ComponentActivity() {
                 val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry?.destination?.route
 
+                // Create a sample user
+                val sampleUser = User(
+                    name = "John Doe",
+                    role = "Student",
+                    follower = 1000,
+                    following = 100,
+                    bio = "This is a short bio about the user."
+                )
+
                 Scaffold(
                     bottomBar = {
                         // setup bar
-                        if (currentRoute in listOf("home", "search", "question", "notification", "profile")) {
+                        if (currentRoute in listOf(
+                                "home",
+                                "search",
+                                "question",
+                                "notification",
+                                "profile"
+                            )
+                        ) {
                             BottomNavigationBar(
                                 selectedItem = currentRoute ?: "home",
                                 onItemSelected = { route ->
@@ -57,7 +81,10 @@ class MainActivity : ComponentActivity() {
                                         navController.navigate("newpost")
                                     },
                                     onNavigateToComment = { post ->
-                                        navController.currentBackStackEntry?.savedStateHandle?.set("post", post)
+                                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                                            "post",
+                                            post
+                                        )
                                         navController.navigate("comment")
                                     }
                                 )
@@ -65,17 +92,38 @@ class MainActivity : ComponentActivity() {
                             composable("search") { SearchScreen() }
                             composable("question") { QuestionScreen() }
                             composable("notification") { NotificationScreen() }
-                            composable("profile") { ProfileScreen() }
+                            composable("profile") {
+                                ProfileScreen(
+                                    user = sampleUser,
+                                    onEditProfile = { /* Handle edit profile */ },
+                                    onNavigateToComment = { post ->
+                                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                                            "post",
+                                            post
+                                        )
+                                        navController.navigate("comment")
+                                    }
+                                )
+                            }
 
                             // new post screen
                             composable("newpost") {
                                 NewPostScreen(
-                                    onBack = { navController.popBackStack() }
+                                    user = sampleUser,
+                                    onBack = { navController.popBackStack() },
+                                    onPost = { text, imageUri ->
+                                        // handle post
+                                        navController.popBackStack()
+                                        println("text: $text and imageUri: $imageUri")
+                                    }
                                 )
                             }
 
                             composable("comment") {
-                                val post = navController.previousBackStackEntry?.savedStateHandle?.get<Post>("post")
+                                val post =
+                                    navController.previousBackStackEntry?.savedStateHandle?.get<Post>(
+                                        "post"
+                                    )
                                 post?.let {
                                     CommentScreen(
                                         post = it,
@@ -83,7 +131,6 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
-
                         }
                     }
                 }
@@ -91,27 +138,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-
-//@Composable
-//fun MainScreen() {
-//    Scaffold(modifier = Modifier.fillMaxSize()) { contentPadding ->
-//        ProfileScreen(
-//            name = "John Doe",
-//            role = "Student",
-//            follower = 1000,
-//            following = 100,
-//            bio = "This is a short bio about the user. It can be expanded to show more details.",
-//            onEditProfile = { /* Handle edit profile */ },
-//            modifier = Modifier.padding(contentPadding)
-//        )
-//    }
-//}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun MainScreenPreview() {
-//    HellothegioiTheme {
-//        MainScreen()
-//    }
-//}

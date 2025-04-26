@@ -163,11 +163,11 @@ fun getTimeAgo(postTime: Long): String {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PostItemHorizontalPreview() {
-//    HellothegioiTheme {
-//        PostItemHorizontal(post = ExamplePost.getAll().get(0))
-//    }
-//}
-
+@Preview(showBackground = true)
+@Composable
+fun PostItemHorizontalPreview() {
+    HellothegioiTheme {
+        val examplePost = ExamplePost.getAll()[0]
+        PostItemHorizontal(post = examplePost, onNavigateToComment = {})
+    }
+}
