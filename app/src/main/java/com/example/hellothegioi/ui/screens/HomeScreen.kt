@@ -18,7 +18,7 @@ import com.example.hellothegioi.R
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
-import androidx. compose. foundation. clickable
+import androidx.compose.foundation.clickable
 import com.example.hellothegioi.data.model.Post
 
 @Composable
