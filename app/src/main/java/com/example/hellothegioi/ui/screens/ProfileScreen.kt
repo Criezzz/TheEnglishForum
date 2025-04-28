@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -23,6 +25,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,19 +64,14 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.statusBars.asPaddingValues())
+            .padding(12.dp)
     ) {
+
         // Header
         Text(
-            text = "Profile",
+            text = "Forum",
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(LightNavyBlue)
-                .padding(vertical = 8.dp),
-            textAlign = TextAlign.Center
+            color = Color.Black
         )
 
         // Profile Info
@@ -113,25 +111,25 @@ fun ProfileScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
-                .padding(16.dp)
+                .padding(horizontal = 8.dp) // Match the padding of the section tabs
+                .border(BorderStroke(1.dp, LightNavyBlue), RoundedCornerShape(8.dp)) // Add border
+                .padding(16.dp) // Inner padding
         ) {
             when (selectedSection) {
                 "Post" -> {
                     val samplePosts = ExamplePost.getAll()
                     LazyColumn(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()),
+                            .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(samplePosts) { post ->
                             PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
+                            HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Add splitter
                         }
                     }
                 }
 
-                //cai nay chua xong nay, day la 3 text placeholder nhe
                 "Save" -> Text("Saved Posts")
                 "Report" -> Text("Reported Posts")
                 "Share" -> Text("Shared Posts")

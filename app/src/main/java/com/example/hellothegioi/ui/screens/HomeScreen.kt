@@ -36,7 +36,7 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Divider(color = Color.Gray, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
 
         val listpost = ExamplePost.getAll()
 
@@ -107,7 +107,7 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                         )
                     }
                 }
-                Divider(color = Color.Gray, thickness = 1.dp)
+                HorizontalDivider(thickness = 1.dp, color = Color.Gray)
             }
 
             items(listpost) { post ->
@@ -115,7 +115,7 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                     post = post,
                     onNavigateToComment = onNavigateToComment
                 )
-                Divider(color = Color.Gray, thickness = 1.dp)
+                HorizontalDivider(thickness = 1.dp, color = Color.Gray)
             }
         }
     }

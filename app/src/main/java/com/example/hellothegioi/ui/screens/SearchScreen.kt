@@ -30,7 +30,7 @@ fun SearchScreen() {
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        Divider(color = Color.Gray, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
 
         Spacer(modifier = Modifier.height(12.dp))
 

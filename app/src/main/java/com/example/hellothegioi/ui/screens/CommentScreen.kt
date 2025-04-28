@@ -30,9 +30,11 @@ fun CommentScreen(post: Post, onBack:()->Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
-                Icon(painter = painterResource(id = R.drawable.ic_back),
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_back),
                     contentDescription = "Back",
-                    modifier = Modifier.size(25.dp))
+                    modifier = Modifier.size(25.dp)
+                )
             }
 
             Spacer(modifier = Modifier.width(15.dp))
@@ -44,16 +46,16 @@ fun CommentScreen(post: Post, onBack:()->Unit) {
             )
         }
 
-        Divider(color = Color.Gray, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
 
         PostItemHorizontal(post = post, onNavigateToComment = {})
 
-        Divider(color = Color.Gray, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
 
         // 2. Input comment
         CommentInput(onSend = { /* Xử lý gửi bình luận */ })
 
-        Divider(color = Color.Gray, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
 
         // 3. List comment
         val listComment = ExampleComment.getAll()
@@ -64,7 +66,7 @@ fun CommentScreen(post: Post, onBack:()->Unit) {
         ) {
             items(listComment) { comment ->
                 CommentItem(comment)
-                Divider(color = Color.Gray, thickness = 1.dp)
+                HorizontalDivider(thickness = 1.dp, color = Color.Gray)
             }
         }
     }
