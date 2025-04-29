@@ -62,6 +62,7 @@ fun ProfileScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.gear),
                     contentDescription = "Settings",
+                    tint = Color.Unspecified,
                     modifier = Modifier
                         .size(36.dp)
                         .clickable { showMenu = true }
@@ -145,6 +146,7 @@ fun ProfileScreen(
                         }
                     }
                 }
+                //khi đổi tên ng dùng thì các post cũngddc dổi tên
 
                 "Save" -> Text("Saved Posts")
                 "Report" -> Text("Reported Posts")

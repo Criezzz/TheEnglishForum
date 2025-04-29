@@ -32,6 +32,7 @@ import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import com.example.hellothegioi.ui.screens.QuestionDetailScreen
 import com.example.hellothegioi.ui.screens.UserProfileScreen
+import com.example.hellothegioi.ui.screens.UserProfileViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,12 +43,11 @@ class MainActivity : ComponentActivity() {
                 val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry?.destination?.route
 
-                // Create a sample user
-                val sampleUser = ExampleUser.student;
+                // Shared ViewModel for user state
+                val userProfileViewModel: UserProfileViewModel = viewModel()
 
                 Scaffold(
                     bottomBar = {
-                        // setup bar
                         if (currentRoute in listOf(
                                 "home",
                                 "search",
@@ -60,7 +60,6 @@ class MainActivity : ComponentActivity() {
                                 selectedItem = currentRoute ?: "home",
                                 onItemSelected = { route ->
                                     navController.navigate(route) {
-                                        // clear stack previous
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
                                         }
@@ -96,8 +95,7 @@ class MainActivity : ComponentActivity() {
                             composable("notification") { NotificationScreen() }
                             composable("profile") {
                                 ProfileScreen(
-                                    user = sampleUser,
-
+                                    user = userProfileViewModel.getUser(),
                                     onNavigateToComment = { post ->
                                         navController.currentBackStackEntry?.savedStateHandle?.set(
                                             "post",
@@ -110,27 +108,24 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                             }
-
-                            // new post screen
                             composable("newpost") {
                                 NewPostScreen(
-                                    user = sampleUser,
+                                    user = userProfileViewModel.getUser(),
                                     onBack = { navController.popBackStack() },
                                     onPost = { text, imageUri ->
-                                        // handle post
                                         navController.popBackStack()
                                         println("text: $text and imageUri: $imageUri")
                                     }
                                 )
+
                             }
                             composable("userProfile") {
-                                val user = navController.previousBackStackEntry
-                                    ?.savedStateHandle
-                                    ?.get<User>("user") ?: ExampleUser.student
-
                                 UserProfileScreen(
-                                    user = user,
-                                    onBack = { navController.popBackStack("profile", inclusive = false) }
+                                    user = userProfileViewModel.getUser(),
+                                    onBack = { navController.popBackStack("profile", inclusive = false) },
+                                    onSave = { updatedUser ->
+                                        userProfileViewModel.updateUser(updatedUser)
+                                    }
                                 )
                             }
                             composable("comment") {

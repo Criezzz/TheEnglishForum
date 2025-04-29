@@ -59,7 +59,8 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
 }
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
-    var username = mutableStateOf("")
+    var name = mutableStateOf("")
+    var username = mutableStateOf("") // Immutable field
     var age = mutableStateOf("")
     var role = mutableStateOf("")
     var gender = mutableStateOf("")
@@ -76,23 +77,50 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     init {
         loadProfile()
     }
-
+    fun updateUser(updatedUser: User) {
+        name.value = updatedUser.name
+        username.value = updatedUser.username
+        age.value = updatedUser.age
+        role.value = updatedUser.role
+        gender.value = updatedUser.gender
+        level.value = updatedUser.level
+        email.value = updatedUser.email
+        isVerifiedTeacher.value = updatedUser.isVerifiedTeacher
+        saveProfile()
+    }
+    fun getUser(): User {
+        return User(
+            name = name.value,
+            username = username.value,
+            age = age.value,
+            role = role.value,
+            gender = gender.value,
+            level = level.value,
+            email = email.value,
+            isVerifiedTeacher = isVerifiedTeacher.value,
+            follower = ExampleUser.student.follower, // Replace with actual data if needed
+            following = ExampleUser.student.following, // Replace with actual data if needed
+            bio = ExampleUser.student.bio // Replace with actual data if needed
+        )
+    }
     fun saveProfile() {
         viewModelScope.launch {
             val context = getApplication<Application>().applicationContext
             val file = File(context.filesDir, fileName)
 
+            // Load existing user to keep immutable fields
             val existingUser: User? = if (file.exists()) {
                 Gson().fromJson(file.readText(), User::class.java)
-            } else null
+            } else ExampleUser.student
 
+            // Create updated user object
             val updatedUser = User(
-                name = username.value,
+                name = name.value, // Editable field
+                username = existingUser?.username ?: ExampleUser.student.username, // Keep unchanged
                 role = role.value,
                 follower = existingUser?.follower ?: ExampleUser.student.follower,
                 following = existingUser?.following ?: ExampleUser.student.following,
                 bio = existingUser?.bio ?: ExampleUser.student.bio,
-                username = username.value,
                 age = age.value,
                 gender = gender.value,
                 level = level.value,
@@ -100,8 +128,12 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 isVerifiedTeacher = isVerifiedTeacher.value
             )
 
+            // Save updated user to JSON
             val json = Gson().toJson(updatedUser)
             file.writeText(json)
+
+            // Reload profile to reflect changes
+            loadProfile()
         }
     }
 
@@ -118,6 +150,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
             try {
                 val profile = Gson().fromJson(json, User::class.java)
+                name.value = profile.name
                 username.value = profile.username
                 age.value = profile.age
                 role.value = profile.role
@@ -127,6 +160,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 isVerifiedTeacher.value = profile.isVerifiedTeacher
             } catch (e: Exception) {
                 val defaultUser = ExampleUser.student
+                name.value = defaultUser.name
                 username.value = defaultUser.username
                 age.value = defaultUser.age
                 role.value = defaultUser.role

@@ -53,7 +53,8 @@ import com.example.hellothegioi.ui.screens.UserProfileViewModel
 @Composable
 fun UserProfileScreen(
     user: User,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSave: (User) -> Unit // Add the onSave parameter
 ) {
     val viewModel: UserProfileViewModel = viewModel()
 
@@ -104,8 +105,8 @@ fun UserProfileScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     OutlinedTextField(
-                        value = viewModel.username.value,
-                        onValueChange = { viewModel.username.value = it },
+                        value = viewModel.name.value,
+                        onValueChange = { viewModel.name.value = it },
                         label = { Text("Tên người dùng") },
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -162,7 +163,20 @@ fun UserProfileScreen(
                             Text("Đổi mật khẩu")
                         }
                         Button(onClick = {
-                            viewModel.saveProfile()
+                            val updatedUser = User(
+                                name = viewModel.name.value,
+                                username = user.username, // Keep immutable fields
+                                age = viewModel.age.value,
+                                role = viewModel.role.value,
+                                gender = viewModel.gender.value,
+                                level = viewModel.level.value,
+                                email = viewModel.email.value,
+                                isVerifiedTeacher = viewModel.isVerifiedTeacher.value,
+                                follower = user.follower,
+                                following = user.following,
+                                bio = user.bio
+                            )
+                            onSave(updatedUser) // Call onSave with the updated user
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar("Lưu thành công!")
                             }
