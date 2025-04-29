@@ -47,6 +47,7 @@ import androidx.core.content.FileProvider
 import coil.compose.rememberAsyncImagePainter
 import com.example.hellothegioi.R
 import com.example.hellothegioi.data.model.User
+import com.example.hellothegioi.data.repository.ExampleUser
 import java.io.File
 import java.io.FileOutputStream
 
@@ -211,7 +212,7 @@ fun saveBitmapToCacheAndGetUri(context: Context, bitmap: Bitmap): Uri {
 @Composable
 fun NewPostScreenPreview() {
     NewPostScreen(
-        user = User(name = "John Doe", role = "Student", follower = 100, following = 10, bio = "bio"),
+        user = ExampleUser.student,
         onBack = {},
         onPost = { _, _ -> }
     )

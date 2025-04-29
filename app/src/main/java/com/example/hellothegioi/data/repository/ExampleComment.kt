@@ -1,7 +1,7 @@
 package com.example.hellothegioi.data.repository
 
-import com.example.hellothegioi.data.model.Comment
 import com.example.hellothegioi.R
+import com.example.hellothegioi.data.model.Comment
 
 object ExampleComment {
     private val exampleComment = listOf(

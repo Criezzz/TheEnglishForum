@@ -1,0 +1,13 @@
+{
+  "name": "John Doe",
+  "role": "Student",
+  "follower": 1000,
+  "following": 100,
+  "bio": "This is a short bio about the student.",
+  "username": "john_doe",
+  "age": "20",
+  "gender": "Male",
+  "level": "B1",
+  "email": "john.doe@example.com",
+  "isVerifiedTeacher": false
+}

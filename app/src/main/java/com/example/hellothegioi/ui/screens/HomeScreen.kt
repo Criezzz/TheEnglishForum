@@ -1,25 +1,23 @@
 package com.example.hellothegioi.ui.screens
 
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.R
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
-import androidx.compose.foundation.clickable
-import com.example.hellothegioi.data.model.Post
 
 @Composable
 fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> Unit) {

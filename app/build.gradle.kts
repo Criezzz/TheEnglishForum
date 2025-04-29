@@ -38,10 +38,17 @@ android {
     buildFeatures {
         compose = true
     }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src\\main\\assets", "src\\main\\assets")
+            }
+        }
+    }
 }
 
 dependencies {
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -50,6 +57,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation("com.google.code.gson:gson:2.10.1")
     //load image
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation ("androidx.navigation:navigation-compose:2.7.7")

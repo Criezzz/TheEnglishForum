@@ -1,7 +1,7 @@
 package com.example.hellothegioi.ui.navigation
 
-import com.example.hellothegioi.R
 import androidx.annotation.DrawableRes
+import com.example.hellothegioi.R
 
 sealed class BottomNavItem(
     val route: String,
