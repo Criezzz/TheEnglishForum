@@ -174,7 +174,8 @@ fun UserProfileScreen(
                                 isVerifiedTeacher = viewModel.isVerifiedTeacher.value,
                                 follower = user.follower,
                                 following = user.following,
-                                bio = user.bio
+                                bio = user.bio,
+                                password = user.password // Keep immutable fields
                             )
                             onSave(updatedUser) // Call onSave with the updated user
                             coroutineScope.launch {

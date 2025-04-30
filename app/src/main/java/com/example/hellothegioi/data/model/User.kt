@@ -11,5 +11,6 @@ data class User(
     val gender: String,
     val level: String,
     val email: String,
-    val isVerifiedTeacher: Boolean
+    val isVerifiedTeacher: Boolean,
+    val password: String
 )

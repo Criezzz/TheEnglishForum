@@ -15,7 +15,8 @@ class ExampleUser {
             gender = "Male",
             level = "B1",
             email = "john.doe@example.com",
-            isVerifiedTeacher = false
+            isVerifiedTeacher = false,
+            password = "password123"
         )
 
         val teacher = User(
@@ -29,7 +30,8 @@ class ExampleUser {
             gender = "Female",
             level = "C2",
             email = "jane.smith@example.com",
-            isVerifiedTeacher = true
+            isVerifiedTeacher = true,
+            password = "securepassword"
         )
     }
 }

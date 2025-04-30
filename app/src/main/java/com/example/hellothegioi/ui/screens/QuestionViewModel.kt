@@ -100,7 +100,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
             isVerifiedTeacher = isVerifiedTeacher.value,
             follower = ExampleUser.student.follower, // Replace with actual data if needed
             following = ExampleUser.student.following, // Replace with actual data if needed
-            bio = ExampleUser.student.bio // Replace with actual data if needed
+            bio = ExampleUser.student.bio, // Replace with actual data if needed
+            password = ExampleUser.student.password // Replace with actual data if needed
         )
     }
     fun saveProfile() {
@@ -125,7 +126,8 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                 gender = gender.value,
                 level = level.value,
                 email = email.value,
-                isVerifiedTeacher = isVerifiedTeacher.value
+                isVerifiedTeacher = isVerifiedTeacher.value,
+                password = existingUser?.password ?: ExampleUser.student.password // Keep unchanged
             )
 
             // Save updated user to JSON
