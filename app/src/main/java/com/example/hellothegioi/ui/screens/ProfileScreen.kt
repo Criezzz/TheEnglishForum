@@ -87,6 +87,14 @@ fun ProfileScreen(
                             onNavigateToProfileSetting() // Navigate to UserProfileScreen
                         }
                     )
+                    DropdownMenuItem(
+                        text = { Text("Log Out") },
+                        onClick = {
+                            showMenu = false
+                            //mock the log out.
+                            println("User logged out")
+                        }
+                    )
                 }
             }
         }
