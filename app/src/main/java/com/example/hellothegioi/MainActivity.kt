@@ -92,26 +92,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-//@Composable
-//fun MainScreen() {
-//    Scaffold(modifier = Modifier.fillMaxSize()) { contentPadding ->
-//        ProfileScreen(
-//            name = "John Doe",
-//            role = "Student",
-//            follower = 1000,
-//            following = 100,
-//            bio = "This is a short bio about the user. It can be expanded to show more details.",
-//            onEditProfile = { /* Handle edit profile */ },
-//            modifier = Modifier.padding(contentPadding)
-//        )
-//    }
-//}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun MainScreenPreview() {
-//    HellothegioiTheme {
-//        MainScreen()
-//    }
-//}
