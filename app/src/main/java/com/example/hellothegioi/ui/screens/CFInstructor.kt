@@ -43,6 +43,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
+import com.example.hellothegioi.ui.theme.Montserrat
+import com.example.hellothegioi.ui.theme.NavyBlue
 
 @Composable
 fun CFInstructor(onNavigateToLogin : () -> Unit) {
@@ -59,13 +61,13 @@ fun CFInstructor(onNavigateToLogin : () -> Unit) {
             .padding(16.dp)
     ) {
         Text(
-            text = "ENGF",
+            text = "The English Forum",
             style = TextStyle(
-                color = Color.Blue,
-                fontSize = 50.sp,
+                color = NavyBlue,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive,
+                fontStyle = FontStyle.Normal,
+                fontFamily = Montserrat,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center
             ),

@@ -8,6 +8,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.Font
 import com.example.hellothegioi.R
 
+val Montserrat = FontFamily(
+    Font(R.font.montserrat_regular, FontWeight.Normal),
+    Font(R.font.montserrat_bold, FontWeight.Bold)
+)
+
+val Bungee = FontFamily(
+    Font(R.font.bungee_regular, FontWeight.Normal)
+)
 // Enum class cho font weight
 enum class FontWeightOption(val weight: FontWeight, val displayName: String) {
     NORMAL(FontWeight.Normal, "Normal"),
@@ -19,17 +27,6 @@ enum class FontWeightOption(val weight: FontWeight, val displayName: String) {
 // Tạo Typography dựa trên font size và font weight
 fun createTypography(fontSize: Int, fontWeight: FontWeight): Typography {
     val baseTextStyle = TextStyle(
-// Set of Material typography styles to start with
-val Montserrat = FontFamily(
-    Font(R.font.montserrat_regular, FontWeight.Normal),
-    Font(R.font.montserrat_bold, FontWeight.Bold)
-)
-
-val Bungee = FontFamily(
-    Font(R.font.bungee_regular, FontWeight.Normal)
-)
-val Typography = Typography(
-    bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = fontWeight,
         lineHeight = (fontSize * 1.5).sp,
@@ -58,8 +55,7 @@ val Typography = Typography(
         labelMedium = baseTextStyle.copy(fontSize = (fontSize - 2).sp),
         labelSmall = baseTextStyle.copy(fontSize = (fontSize - 4).sp)
     )
-    */
-)
+}
 
 // Đối tượng Typography mặc định
 val Typography = createTypography(16, FontWeight.Normal)

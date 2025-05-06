@@ -40,7 +40,10 @@ import com.example.hellothegioi.ui.screens.QuestionScreen
 import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import com.example.hellothegioi.ui.screens.QuestionDetailScreen
+import androidx.compose.runtime.collectAsState
 import com.example.hellothegioi.ui.screens.RePasswordScreen
+import com.example.hellothegioi.ui.screens.SettingsScreen
+import com.example.hellothegioi.ui.screens.SettingsViewModel
 import com.example.hellothegioi.ui.screens.UserProfileScreen
 import com.example.hellothegioi.ui.screens.UserProfileViewModel
 
