@@ -6,29 +6,46 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
+// Enum class cho font weight
+enum class FontWeightOption(val weight: FontWeight, val displayName: String) {
+    NORMAL(FontWeight.Normal, "Normal"),
+    MEDIUM(FontWeight.Medium, "Medium"),
+    SEMI_BOLD(FontWeight.SemiBold, "Semi Bold"),
+    BOLD(FontWeight.Bold, "Bold")
+}
+
+// Tạo Typography dựa trên font size và font weight
+fun createTypography(fontSize: Int, fontWeight: FontWeight): Typography {
+    val baseTextStyle = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontWeight = fontWeight,
+        lineHeight = (fontSize * 1.5).sp,
         letterSpacing = 0.5.sp
     )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+
+    return Typography(
+        bodyLarge = baseTextStyle.copy(fontSize = fontSize.sp),
+        bodyMedium = baseTextStyle.copy(fontSize = (fontSize - 2).sp),
+        bodySmall = baseTextStyle.copy(fontSize = (fontSize - 4).sp),
+
+        titleLarge = baseTextStyle.copy(
+            fontSize = (fontSize + 8).sp,
+            fontWeight = if (fontWeight == FontWeight.Bold) FontWeight.Bold else FontWeight.SemiBold
+        ),
+        titleMedium = baseTextStyle.copy(
+            fontSize = (fontSize + 4).sp,
+            fontWeight = if (fontWeight == FontWeight.Bold) FontWeight.Bold else FontWeight.SemiBold
+        ),
+        titleSmall = baseTextStyle.copy(
+            fontSize = (fontSize + 2).sp,
+            fontWeight = if (fontWeight == FontWeight.Bold) FontWeight.Bold else FontWeight.SemiBold
+        ),
+
+        labelLarge = baseTextStyle.copy(fontSize = fontSize.sp),
+        labelMedium = baseTextStyle.copy(fontSize = (fontSize - 2).sp),
+        labelSmall = baseTextStyle.copy(fontSize = (fontSize - 4).sp)
     )
-    */
-)
+}
+
+// Đối tượng Typography mặc định
+val Typography = createTypography(16, FontWeight.Normal)

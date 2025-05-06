@@ -34,7 +34,8 @@ fun ProfileScreen(
     user: User,
     modifier: Modifier = Modifier,
     onNavigateToComment: (Post) -> Unit = {},
-    onNavigateToProfileSetting: () -> Unit // Add navigation callback for UserProfileScreen
+    onNavigateToProfileSetting: () -> Unit, // Add navigation callback for UserProfileScreen
+    onNavigateToUISetting: () -> Unit
 ) {
     var selectedSection by remember { mutableStateOf("Post") }
     var showMenu by remember { mutableStateOf(false) } // State to control the dropdown menu
@@ -77,6 +78,7 @@ fun ProfileScreen(
                         onClick = {
                             showMenu = false
                             // Handle UI Setting action here
+                            onNavigateToUISetting()
 
                         }
                     )

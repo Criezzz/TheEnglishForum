@@ -10,30 +10,15 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-
-val NavyBlue = Color(0xFF001F54)
-val LightNavyBlue = Color(0xFF003F88)
-val GrayBlue = Color(0xFF4E5D73)
-val LightGrayBlue = Color(0xFF8A9BAE)
-val AccentRed = Color(0xFFB23A48)
-val LightAccentRed = Color(0xFFE57373)
-
-private val DarkColorScheme = darkColorScheme(
-    primary = NavyBlue,
-    secondary = GrayBlue,
-    tertiary = AccentRed
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = LightNavyBlue,
-    secondary = LightGrayBlue,
-    tertiary = LightAccentRed
-)
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun HellothegioiTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
+    primaryColor: Color = if (darkTheme) NavyBlue else LightNavyBlue,
+    fontSize: Int = 16,
+    fontWeight: FontWeight = FontWeight.Normal,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -41,14 +26,16 @@ fun HellothegioiTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> createDarkColorScheme(primaryColor)
+        else -> createLightColorScheme(primaryColor)
     }
+
+    // Tạo Typography dựa trên font size và font weight
+    val typography = createTypography(fontSize, fontWeight)
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = typography,
         content = content
     )
 }
