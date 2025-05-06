@@ -12,7 +12,8 @@ object ExamplePost{
             title = "Welcome to the Forum!",
             text = "This is our first post. Let's build a great community together!",
             image = R.drawable.image_test,
-            isDraft = false
+            isDraft = false,
+            likes = 1
         ),
         Post(
             avatar = R.drawable.ic_user_avatar,
@@ -20,7 +21,8 @@ object ExamplePost{
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
             title = "Today's question!",
             text = "What can you never see but is constantly right in front of you?",
-            isDraft = false
+            isDraft = false,
+            likes = 2
         ),
         Post(
             avatar = R.drawable.ic_user_avatar,
@@ -28,7 +30,8 @@ object ExamplePost{
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
             text = "Mọi người cho mình hỏi 1 số trung tâm tiếng anh uy tín với ạ!",
             image = R.drawable.image_test,
-            isDraft = false
+            isDraft = false,
+            likes = 3
         ),
         Post(
             avatar = R.drawable.ic_user_avatar,
@@ -36,7 +39,8 @@ object ExamplePost{
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
             title = "Answer the question",
             text = "She _____ to Nha Trang every summer.\nA.goes\nB.went\nC.will go\nD.is going",
-            isDraft = false
+            isDraft = false,
+            likes = 4
         ),
         Post(
             avatar = R.drawable.ic_user_avatar,
@@ -44,7 +48,8 @@ object ExamplePost{
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
             text = "I am lazy to learn English",
             image = R.drawable.image_test,
-            isDraft = false
+            isDraft = false,
+            likes = 5
         )
     )
 

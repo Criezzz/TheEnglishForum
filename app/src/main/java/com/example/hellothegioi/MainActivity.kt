@@ -48,7 +48,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HellothegioiTheme {
+            // Khởi tạo SettingsViewModel
+            val settingsViewModel: SettingsViewModel = viewModel()
+
+            // Đọc các cài đặt từ SettingsViewModel
+            val isDarkTheme = settingsViewModel.isDarkTheme.collectAsState().value
+            val primaryColor = settingsViewModel.primaryColor.collectAsState().value
+            val fontSize = settingsViewModel.fontSize.collectAsState().value
+            val fontWeight = settingsViewModel.fontWeight.collectAsState().value
+            HellothegioiTheme (
+                darkTheme = isDarkTheme,
+                primaryColor = primaryColor,
+                fontSize = fontSize,
+                fontWeight = fontWeight
+            ){
                 val navController = rememberNavController()
                 val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry?.destination?.route
@@ -193,6 +206,9 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onNavigateToProfileSetting = {
                                         navController.navigate("userProfile")
+                                    },
+                                    onNavigateToUISetting = {
+                                        navController.navigate("uiSetting")
                                     }
                                 )
                             }
@@ -214,6 +230,12 @@ class MainActivity : ComponentActivity() {
                                     onSave = { updatedUser ->
                                         userProfileViewModel.updateUser(updatedUser)
                                     }
+                                )
+                            }
+                            composable("uiSetting") {
+                                SettingsScreen(
+                                    navController = navController,
+                                    viewModel = settingsViewModel
                                 )
                             }
                             composable("comment") {

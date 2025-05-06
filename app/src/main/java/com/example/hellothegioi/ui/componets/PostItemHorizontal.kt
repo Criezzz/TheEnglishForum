@@ -21,11 +21,18 @@ import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import java.util.concurrent.TimeUnit
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
-fun PostItemHorizontal(post: Post, modifier: Modifier = Modifier, onNavigateToComment: (Post) -> Unit) {
+fun PostItemHorizontal(
+    post: Post,
+    modifier: Modifier = Modifier,
+    onNavigateToComment: (Post) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
     Column(modifier = Modifier.padding(16.dp)) {
-        // Top Row: Avatar, Owner Name, and Date + More Icon
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
@@ -56,15 +63,93 @@ fun PostItemHorizontal(post: Post, modifier: Modifier = Modifier, onNavigateToCo
 
             Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(
-                onClick = { post.onMore() },
-                modifier = Modifier.offset(y = (-12).dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_more),
-                    contentDescription = "More Options",
-                    modifier = Modifier.size(20.dp)
-                )
+            Box {
+                IconButton(
+                    onClick = { expanded = true },
+                    modifier = Modifier.offset(y = (-12).dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_more),
+                        contentDescription = "More Options",
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .background(Color.LightGray, RoundedCornerShape(16.dp))
+                        .width(220.dp)
+                ) {
+                    DropdownMenuItem(
+                        text = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("Lưu bài viết")
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_save),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        },
+                        onClick = {
+                            expanded = false
+                            // save post
+                        },
+                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                    )
+
+                    Divider()
+
+                    DropdownMenuItem(
+                        text = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("Sao chép liên kết")
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_link),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        },
+                        onClick = {
+                            expanded = false
+                            // copy link
+                        },
+                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                    )
+
+                    Divider()
+
+                    DropdownMenuItem(
+                        text = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("Báo cáo", color = Color.Red)
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_report),
+                                    contentDescription = null,
+                                    tint = Color.Red,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                        },
+                        onClick = {
+                            expanded = false
+                            // report
+                        },
+                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                    )
+                }
             }
         }
 

@@ -14,6 +14,7 @@ import com.example.hellothegioi.data.repository.ExampleUser
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.FileReader
+import java.io.InputStreamReader
 
 class QuestionViewModel(application: Application) : AndroidViewModel(application) {
     private val _questions = mutableStateListOf<Question>()
@@ -22,21 +23,30 @@ class QuestionViewModel(application: Application) : AndroidViewModel(application
     init {
         loadQuestionsFromJson()
     }
-
+//
+//    private fun loadQuestionsFromJson() {
+//        val context = getApplication<Application>().applicationContext
+//        val file = File(context.filesDir, "questions_saved.json")
+//
+//        if (file.exists()) {
+//            val reader = FileReader(file)
+//            val questionType = object : TypeToken<List<Question>>() {}.type
+//            val list: List<Question> = Gson().fromJson(reader, questionType)
+//            _questions.addAll(list)
+//            reader.close()
+//        } else {
+//            Log.wtf("loadQuestionsFromJson", "File not found!")
+//        }
+//    }
     private fun loadQuestionsFromJson() {
         val context = getApplication<Application>().applicationContext
-        val file = File(context.filesDir, "questions_saved.json")
+        val inputStream = context.assets.open("questions.json")
+        val reader = InputStreamReader(inputStream)
+        val questionType = object : TypeToken<List<Question>>() {}.type
+        val list: List<Question> = Gson().fromJson(reader, questionType)
+        _questions.addAll(list)
+}
 
-        if (file.exists()) {
-            val reader = FileReader(file)
-            val questionType = object : TypeToken<List<Question>>() {}.type
-            val list: List<Question> = Gson().fromJson(reader, questionType)
-            _questions.addAll(list)
-            reader.close()
-        } else {
-            Log.wtf("loadQuestionsFromJson", "File not found!")
-        }
-    }
 
     fun getQuestionById(id: Int): Question? = _questions.find { it.id == id }
 
