@@ -2,6 +2,7 @@ package com.example.hellothegioi.data.repository
 
 import com.example.hellothegioi.R
 import com.example.hellothegioi.data.model.Post
+import com.example.hellothegioi.data.model.User
 
 object ExamplePost{
     private val examplePosts = listOf(
@@ -50,7 +51,7 @@ object ExamplePost{
             image = R.drawable.image_test,
             isDraft = false,
             likes = 5
-        )
+        ),
     )
 
     fun getAll(): List<Post> = examplePosts
