@@ -211,9 +211,3 @@ fun LoginScreen(onNavigateToCreate : () -> Unit,
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-
-}
