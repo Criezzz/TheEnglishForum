@@ -1,10 +1,7 @@
 package com.example.hellothegioi
 
 import android.os.Bundle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import com.example.hellothegioi.R
+import androidx.compose.runtime.collectAsState
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -29,6 +26,7 @@ import com.example.hellothegioi.ui.navigation.BottomNavigationBar
 import com.example.hellothegioi.ui.screens.CFInstructor
 import com.example.hellothegioi.ui.screens.CommentScreen
 import com.example.hellothegioi.ui.screens.CreateScreen
+import com.example.hellothegioi.ui.screens.DailyQuestionScreen
 import com.example.hellothegioi.ui.screens.ForgotPassword
 import com.example.hellothegioi.ui.screens.HelpScreen
 import com.example.hellothegioi.ui.screens.HomeScreen
@@ -39,13 +37,16 @@ import com.example.hellothegioi.ui.screens.ProfileScreen
 import com.example.hellothegioi.ui.screens.QuestionScreen
 import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
+import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
 import com.example.hellothegioi.ui.screens.QuestionDetailScreen
 import androidx.compose.runtime.collectAsState
 import com.example.hellothegioi.ui.screens.RePasswordScreen
+import com.example.hellothegioi.ui.screens.UserProfileScreen
 import com.example.hellothegioi.ui.screens.SettingsScreen
 import com.example.hellothegioi.ui.screens.SettingsViewModel
 import com.example.hellothegioi.ui.screens.UserProfileScreen
 import com.example.hellothegioi.ui.screens.UserProfileViewModel
+import com.example.hellothegioi.ui.screens.SettingsViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -184,7 +185,11 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("search") { SearchScreen() }
-                            composable("question") { QuestionScreen() }
+//                            composable("question") { QuestionScreen() }
+                            composable("question") {
+                                val viewModel: QuestionViewModel_v2 = viewModel(factory = QuestionViewModel_v2.Factory())
+                                DailyQuestionScreen(viewModel = viewModel)
+                            }
                             composable("notification") { NotificationScreen(
                                 onNavigateToComment = { post ->
                                     navController.currentBackStackEntry?.savedStateHandle?.set(
