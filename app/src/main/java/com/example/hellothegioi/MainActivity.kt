@@ -26,6 +26,7 @@ import com.example.hellothegioi.ui.navigation.BottomNavigationBar
 import com.example.hellothegioi.ui.screens.CFInstructor
 import com.example.hellothegioi.ui.screens.CommentScreen
 import com.example.hellothegioi.ui.screens.CreateScreen
+import com.example.hellothegioi.ui.screens.DailyQuestionScreen
 import com.example.hellothegioi.ui.screens.ForgotPassword
 import com.example.hellothegioi.ui.screens.HelpScreen
 import com.example.hellothegioi.ui.screens.HomeScreen
@@ -33,10 +34,9 @@ import com.example.hellothegioi.ui.screens.LoginScreen
 import com.example.hellothegioi.ui.screens.NewPostScreen
 import com.example.hellothegioi.ui.screens.NotificationScreen
 import com.example.hellothegioi.ui.screens.ProfileScreen
-import com.example.hellothegioi.ui.screens.QuestionScreen
 import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.theme.HellothegioiTheme
-import com.example.hellothegioi.ui.screens.QuestionDetailScreen
+import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
 import com.example.hellothegioi.ui.screens.RePasswordScreen
 import com.example.hellothegioi.ui.screens.UserProfileScreen
 import com.example.hellothegioi.ui.screens.SettingsScreen
@@ -178,7 +178,11 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("search") { SearchScreen() }
-                            composable("question") { QuestionScreen() }
+//                            composable("question") { QuestionScreen() }
+                            composable("question") {
+                                val viewModel: QuestionViewModel_v2 = viewModel(factory = QuestionViewModel_v2.Factory())
+                                DailyQuestionScreen(viewModel = viewModel)
+                            }
                             composable("notification") { NotificationScreen(
                                 onNavigateToComment = { post ->
                                     navController.currentBackStackEntry?.savedStateHandle?.set(
