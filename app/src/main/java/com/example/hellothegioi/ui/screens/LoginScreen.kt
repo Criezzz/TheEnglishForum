@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import com.example.hellothegioi.ui.theme.Montserrat
+import com.example.hellothegioi.ui.theme.Bungee
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +34,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.repository.ExampleUser
+import androidx.compose.ui.text.font.Font
+
+import com.example.hellothegioi.R
+import com.example.hellothegioi.ui.theme.NavyBlue
 
 @Composable
 fun LoginScreen(onNavigateToCreate : () -> Unit,
@@ -62,13 +68,13 @@ fun LoginScreen(onNavigateToCreate : () -> Unit,
         )
 
         Text(
-            text = "ENGF",
+            text = "The English Forum",
             style = TextStyle(
-                color = Color.Blue,
-                fontSize = 50.sp,
+                color = NavyBlue,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive,
+                fontStyle = FontStyle.Normal,
+                fontFamily = Montserrat,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center
             ),
@@ -81,7 +87,9 @@ fun LoginScreen(onNavigateToCreate : () -> Unit,
             text = "Đăng nhập",
             style = TextStyle(
                 fontSize = 30.sp,
-                textAlign = TextAlign.Center
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontFamily = Montserrat,
             ),
             modifier = Modifier
                 .fillMaxWidth()

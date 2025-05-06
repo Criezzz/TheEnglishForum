@@ -1,6 +1,10 @@
 package com.example.hellothegioi
 
 import android.os.Bundle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import com.example.hellothegioi.R
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -82,7 +86,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(
                             navController = navController,
-                            startDestination = "Cf",
+                            startDestination = "login",
                         ) {
                             composable("login") {
                                  LoginScreen(
@@ -90,7 +94,9 @@ class MainActivity : ComponentActivity() {
                                          navController.navigate("create")
                                      },
                                      onNavigateToHome = {
-                                         navController.navigate("home")
+                                         navController.navigate("home") {
+                                             popUpTo("login") { inclusive = true }
+                                         }
                                      },
                                         onNavigateToHelp = {
                                             navController.navigate("help")
