@@ -11,13 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.hellothegioi.ui.screens.Question
-import com.example.hellothegioi.ui.screens.TodayQuestionCard
-import com.example.hellothegioi.ui.screens.WeeklyQuestionItem
-import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
-import kotlinx.coroutines.launch
-import perfetto.protos.UiState
+import com.example.hellothegioi.data.model.Question
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 

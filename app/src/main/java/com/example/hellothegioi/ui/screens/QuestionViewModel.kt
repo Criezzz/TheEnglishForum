@@ -13,7 +13,6 @@ import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.repository.ExampleUser
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.FileReader
 import java.io.InputStreamReader
 
 class QuestionViewModel(application: Application) : AndroidViewModel(application) {
