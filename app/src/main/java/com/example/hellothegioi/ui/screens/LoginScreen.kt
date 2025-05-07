@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,8 +24,41 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.repository.ExampleUser
-import com.example.hellothegioi.ui.theme.LoginScreenTheme
-import com.example.hellothegioi.ui.theme.Montserrat
+
+private val LoginColorScheme = lightColorScheme(
+    primary = Color(0xFF1976D2),
+    onPrimary = Color.White,
+    background = Color.White,
+    onBackground = Color.Black,
+    surface = Color.White,
+    onSurface = Color.Black,
+    error = Color(0xFFB00020),
+    onError = Color.White
+)
+
+private val LoginTypography = Typography(
+    headlineLarge = TextStyle(
+        fontSize = 32.sp,
+        fontWeight = FontWeight.Bold,
+        letterSpacing = 1.sp
+    ),
+    titleLarge = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    titleMedium = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    bodyLarge = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    labelLarge = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium
+    )
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +68,10 @@ fun LoginScreen(
     onNavigateToHelp: () -> Unit,
     onNavigateToFogotPass: () -> Unit
 ) {
-    LoginScreenTheme {
+    MaterialTheme(
+        colorScheme = LoginColorScheme,
+        typography = LoginTypography
+    ) {
         var username by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isFocused by remember { mutableStateOf(false) }
@@ -103,7 +138,7 @@ fun LoginScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(64.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -137,7 +172,7 @@ fun LoginScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(64.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
@@ -153,7 +188,6 @@ fun LoginScreen(
                 ),
                 singleLine = true
             )
-        }
 
             if (errorMessage.isNotEmpty()) {
                 Text(
@@ -237,3 +271,4 @@ fun LoginScreen(
         }
     }
 }
+

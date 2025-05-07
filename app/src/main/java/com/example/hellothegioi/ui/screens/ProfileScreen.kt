@@ -153,24 +153,22 @@ fun ProfileScreen(
                             }
                         }
                     }
-                }
-                //khi đổi tên ng dùng thì các post cũngddc dổi tên
-
-                "Save" -> {
-                    val samplePost = ExamplePost.getAll().get(3)
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(listOf(samplePost)) { post ->
-                            PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
-                            HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Add splitter
+                    "Save" -> {
+                        val samplePost = ExamplePost.getAll().get(3)
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(listOf(samplePost)) { post ->
+                                PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
+                                HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Add splitter
+                            }
                         }
                     }
+                    "Report" -> Text("Reported Posts")
+                    "Share" -> Text("Shared Posts")
                 }
-                "Report" -> Text("Reported Posts")
-                "Share" -> Text("Shared Posts")
             }
         }
     }
