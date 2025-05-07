@@ -25,7 +25,6 @@ import com.example.hellothegioi.R
 import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.repository.ExamplePost
-import com.example.hellothegioi.data.repository.ExampleUser
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
 import com.example.hellothegioi.ui.theme.LightNavyBlue
 
@@ -144,7 +143,7 @@ fun ProfileScreen(
         ) {
             when (selectedSection) {
                 "Post" -> {
-                    val samplePosts = ExamplePost.getAll()
+                    val samplePosts = ExamplePost.getUserPost()
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -158,7 +157,19 @@ fun ProfileScreen(
                 }
                 //khi đổi tên ng dùng thì các post cũngddc dổi tên
 
-                "Save" -> Text("Saved Posts")
+                "Save" -> {
+                    val samplePost = ExamplePost.getAll().get(3)
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(listOf(samplePost)) { post ->
+                            PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
+                            HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Add splitter
+                        }
+                    }
+                }
                 "Report" -> Text("Reported Posts")
                 "Share" -> Text("Shared Posts")
             }

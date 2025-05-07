@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.repository.ExampleUser
+import com.example.hellothegioi.data.model.CurrentUser
 
 @Composable
 fun LoginScreen(onNavigateToCreate : () -> Unit,
@@ -151,9 +152,11 @@ fun LoginScreen(onNavigateToCreate : () -> Unit,
                 if (username.isEmpty() || password.isEmpty()) {
                     errorMessage = "Tên tài khoản hoặc mật khẩu không được để trống"
                 } else if (username == ExampleUser.student.username && password == ExampleUser.student.password) {
+                    CurrentUser.user = ExampleUser.student
                     onNavigateToHome()
                     println("Đăng nhập thành công với tài khoản: $username")
                 } else if (username == ExampleUser.teacher.username && password == ExampleUser.teacher.password) {
+                    CurrentUser.user = ExampleUser.teacher
                     onNavigateToHome()
                     println("Đăng nhập thành công với tài khoản: $username")
                 } else {

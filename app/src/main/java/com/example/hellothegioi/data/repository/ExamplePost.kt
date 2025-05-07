@@ -3,12 +3,13 @@ package com.example.hellothegioi.data.repository
 import com.example.hellothegioi.R
 import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.model.User
+import com.example.hellothegioi.data.model.CurrentUser
 
 object ExamplePost{
     private val examplePosts = listOf(
         Post(
             avatar = R.drawable.ic_user_avatar,
-            ownerName = "John Doe",
+            ownerName = "John doe",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 3,
             title = "Welcome to the Forum!",
             text = "This is our first post. Let's build a great community together!",
@@ -51,8 +52,31 @@ object ExamplePost{
             image = R.drawable.image_test,
             isDraft = false,
             likes = 5
-        ),
+        )
     )
 
-    fun getAll(): List<Post> = examplePosts
+    fun getUserPost(): List<Post> {
+        val currentUser = CurrentUser.user ?: return emptyList()
+        return listOf(
+            Post(
+                avatar = R.drawable.ic_user_avatar,
+                ownerName = currentUser.name,
+                postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 2,
+                title = "Tự học Tiếng Anh",
+                text = "Mình đang luyện IELTS mỗi ngày. Các bạn có nguồn tài liệu nào hay không?",
+                isDraft = false,
+                likes = 5
+            ),
+            Post(
+                avatar = R.drawable.ic_user_avatar,
+                ownerName = currentUser.name,
+                postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 1,
+                text = "Mọi người thích học qua phim hay nhạc hơn?",
+                isDraft = false,
+                likes = 5
+            )
+        )
+    }
+
+    fun getAll(): List<Post> = examplePosts + getUserPost()
 }
