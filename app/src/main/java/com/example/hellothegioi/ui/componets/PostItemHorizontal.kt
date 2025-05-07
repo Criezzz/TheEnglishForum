@@ -79,7 +79,7 @@ fun PostItemHorizontal(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                     modifier = Modifier
-                        .background(Color.LightGray, RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                         .width(220.dp)
                 ) {
                     DropdownMenuItem(
@@ -88,11 +88,15 @@ fun PostItemHorizontal(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text("Lưu bài viết")
+                                Text(
+                                    "Lưu bài viết",
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_save),
                                     contentDescription = null,
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         },
@@ -100,10 +104,10 @@ fun PostItemHorizontal(
                             expanded = false
                             // save post
                         },
-                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                     )
 
-                    Divider()
+                    Divider(color = MaterialTheme.colorScheme.outline)
 
                     DropdownMenuItem(
                         text = {
@@ -111,11 +115,15 @@ fun PostItemHorizontal(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text("Sao chép liên kết")
+                                Text(
+                                    "Sao chép liên kết",
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_link),
                                     contentDescription = null,
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         },
@@ -123,10 +131,10 @@ fun PostItemHorizontal(
                             expanded = false
                             // copy link
                         },
-                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                     )
 
-                    Divider()
+                    Divider(color = MaterialTheme.colorScheme.outline)
 
                     DropdownMenuItem(
                         text = {
@@ -134,11 +142,14 @@ fun PostItemHorizontal(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Text("Báo cáo", color = Color.Red)
+                                Text(
+                                    "Báo cáo",
+                                    color = MaterialTheme.colorScheme.error
+                                )
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_report),
                                     contentDescription = null,
-                                    tint = Color.Red,
+                                    tint = MaterialTheme.colorScheme.error,
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
@@ -147,7 +158,7 @@ fun PostItemHorizontal(
                             expanded = false
                             // report
                         },
-                        modifier = Modifier.background(Color(0xFFDDDDDD))
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                     )
                 }
             }

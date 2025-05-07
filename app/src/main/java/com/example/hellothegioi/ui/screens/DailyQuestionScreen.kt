@@ -36,15 +36,15 @@ fun DailyQuestionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "The Forum English",
+                        text = "Daily problem",
                         style = MaterialTheme.typography.headlineSmall.copy(
                             fontWeight = FontWeight.Bold
                         )
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         }
