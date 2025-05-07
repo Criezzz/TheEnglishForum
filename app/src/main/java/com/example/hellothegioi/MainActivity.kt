@@ -180,18 +180,26 @@ class MainActivity : ComponentActivity() {
                                 val viewModel: QuestionViewModel_v2 = viewModel(factory = QuestionViewModel_v2.Factory(context))
                                 DailyQuestionScreen(viewModel = viewModel)
                             }
-                            composable("notification") { NotificationScreen(
-                                onNavigateToComment = { post ->
-                                    navController.currentBackStackEntry?.savedStateHandle?.set(
-                                        "post",
-                                        post
-                                    )
-                                    navController.navigate("comment")
-                                },
-                                onNavigateToQuestion = {
-                                    navController.navigate("question")
-                                }
-                            ) }
+                            composable("notification") {
+                                NotificationScreen(
+                                    onNavigateToComment = { notification ->
+                                        val post = (notification.target as? com.example.hellothegioi.data.model.NotificationTarget.Post)?.post
+                                        post?.let {
+                                            navController.currentBackStackEntry?.savedStateHandle?.set(
+                                                "post",
+                                                it
+                                            )
+                                            navController.navigate("comment")
+                                        }
+                                    },
+                                    onNavigateToQuestion = {
+//                                        if (navController.currentBackStackEntry?.savedStateHandle?.get<Boolean>("questionNavigationOccurred") != true) {
+//                                            navController.currentBackStackEntry?.savedStateHandle?.set("questionNavigationOccurred", true)
+                                            navController.navigate("question")
+//                                        }
+                                    }
+                                )
+                            }
                             composable("profile") {
                                 ProfileScreen(
                                     user = userProfileViewModel.getUser(),
