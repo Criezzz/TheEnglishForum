@@ -70,7 +70,6 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.4.0")
 
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,4 +1,5 @@
 package com.example.hellothegioi.ui.screens
+
 import androidx.compose.material3.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -48,6 +49,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.material3.ExperimentalMaterial3Api
 import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.ui.screens.UserProfileViewModel
+import com.example.hellothegioi.data.model.CurrentUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -178,6 +180,7 @@ fun UserProfileScreen(
                                 password = user.password // Keep immutable fields
                             )
                             onSave(updatedUser) // Call onSave with the updated user
+                            CurrentUser.user = updatedUser
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar("Lưu thành công!")
                             }
