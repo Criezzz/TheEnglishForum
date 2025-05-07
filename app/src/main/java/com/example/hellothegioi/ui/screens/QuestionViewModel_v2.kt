@@ -31,6 +31,9 @@ class QuestionViewModel_v2(private val repository: QuestionRepository) : ViewMod
         val question = weeklyQuestions.value.questions.find { it.id == questionId }
 
         if (question != null) {
+            // Cập nhật câu trả lời người dùng trong đối tượng câu hỏi
+            question.userSelectedAnswer = selectedAnswer
+
             repository.answerQuestion(questionId, selectedAnswer)
 
             val result = if (selectedAnswer == question.correctAnswerIndex) {
@@ -44,6 +47,7 @@ class QuestionViewModel_v2(private val repository: QuestionRepository) : ViewMod
             }
         }
     }
+
 
     fun resetAnswerResult(questionId: String) {
         _answerResults.update { currentMap ->

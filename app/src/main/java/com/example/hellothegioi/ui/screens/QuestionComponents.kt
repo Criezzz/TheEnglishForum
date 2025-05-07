@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -64,6 +65,17 @@ fun TodayQuestionCard(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            val correctColor = Color(0xFF2ECC71) // Green for correct
+            val incorrectColor = Color(0xFFE74C3C) // Red for incorrect
+
+            // Define colors that respect both light and dark themes
+            val correctBackgroundColor = if (isSystemInDarkTheme()) Color(0xFF1A472A) else Color(0xFFD5F5E3)
+            val incorrectBackgroundColor = if (isSystemInDarkTheme()) Color(0xFF4A1515) else Color(0xFFFADBD8)
+
+            // Define icon colors that are visible in both themes
+            val correctIconColor = if (isSystemInDarkTheme()) Color(0xFF4EEE94) else Color(0xFF2ECC71)
+            val incorrectIconColor = if (isSystemInDarkTheme()) Color(0xFFFF6B6B) else Color(0xFFE74C3C)
+
             question.options.forEachIndexed { index, option ->
                 val isSelected = question.userSelectedAnswer == index
                 val isCorrect = answerResult != null && index == question.correctAnswerIndex
@@ -71,15 +83,15 @@ fun TodayQuestionCard(
                         index == question.userSelectedAnswer
 
                 val backgroundColor = when {
-                    isCorrect -> Color(0xFFD5F5E3) // Light green for correct
-                    isIncorrect -> Color(0xFFFADBD8) // Light red for incorrect
+                    isCorrect -> correctBackgroundColor
+                    isIncorrect -> incorrectBackgroundColor
                     isSelected -> MaterialTheme.colorScheme.primaryContainer
                     else -> MaterialTheme.colorScheme.surface
                 }
 
                 val borderColor = when {
-                    isCorrect -> Color(0xFF2ECC71) // Green for correct
-                    isIncorrect -> Color(0xFFE74C3C) // Red for incorrect
+                    isCorrect -> correctColor
+                    isIncorrect -> incorrectColor
                     isSelected -> MaterialTheme.colorScheme.primary
                     else -> MaterialTheme.colorScheme.outline
                 }
@@ -115,13 +127,13 @@ fun TodayQuestionCard(
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = "Correct",
-                                tint = Color(0xFF2ECC71)
+                                tint = correctIconColor
                             )
                         } else if (isIncorrect) {
                             Icon(
                                 imageVector = Icons.Default.Close,
                                 contentDescription = "Incorrect",
-                                tint = Color(0xFFE74C3C)
+                                tint = incorrectIconColor
                             )
                         }
                     }
@@ -143,6 +155,12 @@ fun TodayQuestionCard(
                         .padding(top = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    val resultTextColor = when (answerResult) {
+                        is QuestionViewModel_v2.AnswerResult.Correct -> correctIconColor
+                        is QuestionViewModel_v2.AnswerResult.Incorrect -> incorrectIconColor
+                        else -> MaterialTheme.colorScheme.onSurface
+                    }
+
                     Text(
                         text = when (answerResult) {
                             is QuestionViewModel_v2.AnswerResult.Correct -> "Correct!"
@@ -151,11 +169,7 @@ fun TodayQuestionCard(
                         },
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = when (answerResult) {
-                            is QuestionViewModel_v2.AnswerResult.Correct -> Color(0xFF2ECC71)
-                            is QuestionViewModel_v2.AnswerResult.Incorrect -> Color(0xFFE74C3C)
-                            else -> MaterialTheme.colorScheme.onSurface
-                        }
+                        color = resultTextColor
                     )
 
                     if (answerResult is QuestionViewModel_v2.AnswerResult.Incorrect) {
