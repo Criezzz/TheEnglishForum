@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 //import perfetto.protos.UiState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import com.example.hellothegioi.data.model.Question
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,15 +43,15 @@ fun DailyQuestionScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "The Forum English",
+                        text = "Daily problem",
                         style = MaterialTheme.typography.headlineSmall.copy(
                             fontWeight = FontWeight.Bold
                         )
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
         }

@@ -1,214 +1,239 @@
 package com.example.hellothegioi.ui.screens
 
-
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.repository.ExampleUser
-import com.example.hellothegioi.data.model.CurrentUser
+import com.example.hellothegioi.ui.theme.LoginScreenTheme
+import com.example.hellothegioi.ui.theme.Montserrat
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(onNavigateToCreate : () -> Unit,
-                onNavigateToHome : () -> Unit,
-                onNavigateToHelp : () -> Unit,
-                onNavigateToFogotPass : () -> Unit) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var isFocused by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Đăng ký",
-            style = TextStyle(
-                color = Color.Blue,
-                textDecoration = TextDecoration.Underline,
-                fontSize = 20.sp,
-                textAlign = TextAlign.End,
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, end = 16.dp)
-                .clickable { onNavigateToCreate() },
-        )
-
-        Text(
-            text = "ENGF",
-            style = TextStyle(
-                color = Color.Blue,
-                fontSize = 50.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                fontFamily = FontFamily.Cursive,
-                letterSpacing = 2.sp,
-                textAlign = TextAlign.Center
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp)
-        )
-
-        Text(
-            text = "Đăng nhập",
-            style = TextStyle(
-                fontSize = 30.sp,
-                textAlign = TextAlign.Center
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 8.dp)
-        )
-        Spacer(modifier = Modifier.height(18.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Tên tài khoản:",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-            TextField(
-                value = username,
-                onValueChange = { username = it },
-                placeholder = { Text("Nhập tên tài khoản") },
-                modifier = Modifier
-                    .width(220.dp)
-                    .height(56.dp)
-                    .onFocusChanged { focusState -> isFocused = focusState.isFocused },
-                textStyle = TextStyle(fontSize = 14.sp),
-                singleLine = true
-            )
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Mật khẩu:",
-                style = TextStyle(
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                placeholder = { Text("Nhập mật khẩu") },
-                modifier = Modifier
-                    .width(220.dp)
-                    .height(56.dp)
-                    .onFocusChanged { focusState -> isFocused = focusState.isFocused },
-                textStyle = TextStyle(fontSize = 14.sp),
-                singleLine = true
-            )
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Spacer(modifier = Modifier.height(20.dp))
-
+fun LoginScreen(
+    onNavigateToCreate: () -> Unit,
+    onNavigateToHome: () -> Unit,
+    onNavigateToHelp: () -> Unit,
+    onNavigateToFogotPass: () -> Unit
+) {
+    LoginScreenTheme {
+        var username by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var isFocused by remember { mutableStateOf(false) }
         var errorMessage by remember { mutableStateOf("") }
 
-        Button(
-            onClick = {
-                if (username.isEmpty() || password.isEmpty()) {
-                    errorMessage = "Tên tài khoản hoặc mật khẩu không được để trống"
-                } else if (username == ExampleUser.student.username && password == ExampleUser.student.password) {
-                    CurrentUser.user = ExampleUser.student
-                    onNavigateToHome()
-                    println("Đăng nhập thành công với tài khoản: $username")
-                } else if (username == ExampleUser.teacher.username && password == ExampleUser.teacher.password) {
-                    CurrentUser.user = ExampleUser.teacher
-                    onNavigateToHome()
-                    println("Đăng nhập thành công với tài khoản: $username")
-                } else {
-                    errorMessage = "Tên tài khoản hoặc mật khẩu không đúng"
-                }
-            },
+        Column(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Đăng nhập", fontSize = 16.sp)
-        }
-
-        if (errorMessage.isNotEmpty()) {
+            // Register link at the top
             Text(
-                text = errorMessage,
-                color = Color.Red,
-                style = TextStyle(fontSize = 14.sp),
+                text = "Đăng ký",
+                style = MaterialTheme.typography.labelLarge.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline,
+                    fontWeight = FontWeight.Medium
+                ),
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 8.dp)
+                    .align(Alignment.End)
+                    .padding(top = 16.dp)
+                    .clickable { onNavigateToCreate() }
+            )
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            // App title
+            Text(
+                text = "The English Forum",
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                ),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Login subtitle
+            Text(
+                text = "Đăng nhập",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.SemiBold
+                ),
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(48.dp))
+
+            // Username field
+            OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text("Tên tài khoản") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Email,
+                        contentDescription = "Email Icon",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    cursorColor = MaterialTheme.colorScheme.primary
+                ),
+                textStyle = MaterialTheme.typography.bodyLarge,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Password field
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Mật khẩu") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Lock Icon",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
+                visualTransformation = PasswordVisualTransformation(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    cursorColor = MaterialTheme.colorScheme.primary
+                ),
+                textStyle = MaterialTheme.typography.bodyLarge,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                singleLine = true
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "Quên mật khẩu?",
-                color = Color.Blue,
-                modifier = Modifier.clickable { onNavigateToFogotPass() }
-            )
-            Text(
-                text = " / ",
-                modifier = Modifier.padding(horizontal = 0.dp)
-            )
-            Text(
-                text = "Help",
-                color = Color.Blue,
-                modifier = Modifier.clickable { onNavigateToHelp() }
-            )
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Login button
+            Button(
+                onClick = {
+                    if (username.isEmpty() || password.isEmpty()) {
+                        errorMessage = "Tên tài khoản hoặc mật khẩu không được để trống"
+                    } else if (username == ExampleUser.student.username && password == ExampleUser.student.password) {
+                        onNavigateToHome()
+                    } else if (username == ExampleUser.teacher.username && password == ExampleUser.teacher.password) {
+                        onNavigateToHome()
+                    } else {
+                        errorMessage = "Tên tài khoản hoặc mật khẩu không đúng"
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text(
+                    text = "Đăng nhập",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Help and Forgot Password links
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(
+                    onClick = { onNavigateToFogotPass() },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text(
+                        text = "Quên mật khẩu?",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
+                }
+                Text(
+                    text = " / ",
+                    style = MaterialTheme.typography.labelLarge
+                )
+                TextButton(
+                    onClick = { onNavigateToHelp() },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text(
+                        text = "Help",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
+                }
+            }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-
 }

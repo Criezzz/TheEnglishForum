@@ -37,3 +37,9 @@ fun createLightColorScheme(primaryColor: Color) = lightColorScheme(
     secondary = LightGrayBlue,
     tertiary = LightAccentRed
 )
+val Blue = Color(0xFF2196F3)
+val Green = Color(0xFF4CAF50)
+val Purple = Color(0xFF9C27B0)
+val Pink = Color(0xFFE91E63)
+val Orange = Color(0xFFFF9800)
+val NavyyBlue = Color(0xFF001F54)

@@ -1,18 +1,13 @@
 package com.example.hellothegioi
 
 import android.os.Bundle
-import androidx.compose.runtime.collectAsState
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -20,8 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.hellothegioi.data.model.Post
-import com.example.hellothegioi.data.model.User
-import com.example.hellothegioi.data.repository.ExampleUser
 import com.example.hellothegioi.ui.navigation.BottomNavigationBar
 import com.example.hellothegioi.ui.screens.CFInstructor
 import com.example.hellothegioi.ui.screens.CommentScreen
@@ -34,14 +27,14 @@ import com.example.hellothegioi.ui.screens.LoginScreen
 import com.example.hellothegioi.ui.screens.NewPostScreen
 import com.example.hellothegioi.ui.screens.NotificationScreen
 import com.example.hellothegioi.ui.screens.ProfileScreen
-import com.example.hellothegioi.ui.screens.SearchScreen
-import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
 import com.example.hellothegioi.ui.screens.RePasswordScreen
-import com.example.hellothegioi.ui.screens.UserProfileScreen
+import com.example.hellothegioi.ui.screens.SearchScreen
 import com.example.hellothegioi.ui.screens.SettingsScreen
-import com.example.hellothegioi.ui.screens.UserProfileViewModel
 import com.example.hellothegioi.ui.screens.SettingsViewModel
+import com.example.hellothegioi.ui.screens.UserProfileScreen
+import com.example.hellothegioi.ui.screens.UserProfileViewModel
+import com.example.hellothegioi.ui.theme.HellothegioiTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +91,7 @@ class MainActivity : ComponentActivity() {
                     Box(modifier = Modifier.padding(innerPadding)) {
                         NavHost(
                             navController = navController,
-                            startDestination = "Cf",
+                            startDestination = "login",
                         ) {
                             composable("login") {
                                  LoginScreen(
@@ -106,7 +99,9 @@ class MainActivity : ComponentActivity() {
                                          navController.navigate("create")
                                      },
                                      onNavigateToHome = {
-                                         navController.navigate("home")
+                                         navController.navigate("home") {
+                                             popUpTo("login") { inclusive = true }
+                                         }
                                      },
                                         onNavigateToHelp = {
                                             navController.navigate("help")

@@ -3,6 +3,9 @@ package com.example.hellothegioi.ui.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.hellothegioi.data.model.Question
+import com.example.hellothegioi.data.model.WeeklyQuestions
+import com.example.hellothegioi.data.repository.QuestionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +20,7 @@ class QuestionViewModel_v2(private val repository: QuestionRepository) : ViewMod
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    // ✅ Lưu trạng thái câu trả lời theo từng questionId
+    // Lưu trạng thái câu trả lời theo từng questionId
     private val _answerResults = MutableStateFlow<Map<String, AnswerResult>>(emptyMap())
     val answerResults: StateFlow<Map<String, AnswerResult>> = _answerResults.asStateFlow()
 

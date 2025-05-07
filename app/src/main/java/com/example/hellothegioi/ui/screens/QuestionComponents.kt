@@ -23,11 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.hellothegioi.ui.screens.Question
-import com.example.hellothegioi.ui.screens.WeeklyQuestions
-import com.example.hellothegioi.ui.screens.QuestionRepository
-import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
+import com.example.hellothegioi.data.model.Question
 
 @Composable
 fun TodayQuestionCard(
@@ -206,7 +202,6 @@ fun WeeklyQuestionItem(
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Indicator for answered questions
             // Indicator for answered questions
             if (question.isAnswered) {
                 if (answerResult is QuestionViewModel_v2.AnswerResult.Correct) {

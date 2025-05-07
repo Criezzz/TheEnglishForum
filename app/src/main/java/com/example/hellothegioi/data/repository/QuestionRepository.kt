@@ -1,7 +1,7 @@
-package com.example.hellothegioi.ui.screens
+package com.example.hellothegioi.data.repository
 
-import com.example.hellothegioi.ui.screens.Question
-import com.example.hellothegioi.ui.screens.WeeklyQuestions
+import com.example.hellothegioi.data.model.Question
+import com.example.hellothegioi.data.model.WeeklyQuestions
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

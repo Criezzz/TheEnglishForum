@@ -28,130 +28,129 @@ import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
 import com.example.hellothegioi.ui.theme.LightNavyBlue
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     user: User,
     modifier: Modifier = Modifier,
     onNavigateToComment: (Post) -> Unit = {},
-    onNavigateToProfileSetting: () -> Unit, // Add navigation callback for UserProfileScreen
+    onNavigateToProfileSetting: () -> Unit,
     onNavigateToUISetting: () -> Unit
 ) {
     var selectedSection by remember { mutableStateOf("Post") }
-    var showMenu by remember { mutableStateOf(false) } // State to control the dropdown menu
+    var showMenu by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
-    ) {
-
-        // Header
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Forum",
-                fontSize = 20.sp,
-                color = Color.Black
-            )
-
-            // Gear Icon with Dropdown Menu
-            Box {
-                Icon(
-                    painter = painterResource(id = R.drawable.gear),
-                    contentDescription = "Settings",
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .clickable { showMenu = true }
-                )
-
-                DropdownMenu(
-                    expanded = showMenu,
-                    onDismissRequest = { showMenu = false }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text("UI Setting") },
-                        onClick = {
-                            showMenu = false
-                            // Handle UI Setting action here
-                            onNavigateToUISetting()
-
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Profile Setting") },
-                        onClick = {
-                            showMenu = false
-                            onNavigateToProfileSetting() // Navigate to UserProfileScreen
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Log Out") },
-                        onClick = {
-                            showMenu = false
-                            //mock the log out.
-                            println("User logged out")
-                        }
-                    )
-                }
-            }
-        }
-
-        // Profile Info
-        ProfileInfo(user = user)
-
-        // Section Tabs
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .border(BorderStroke(1.dp, LightNavyBlue), RoundedCornerShape(8.dp)),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            listOf("Post", "Save", "Report", "Share").forEach { section ->
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable { selectedSection = section }
-                        .background(
-                            if (selectedSection == section) LightNavyBlue else Color.Transparent,
-                            RoundedCornerShape(8.dp)
-                        )
-                        .padding(8.dp),
-                    contentAlignment = Alignment.Center
-                ) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
                     Text(
-                        text = section,
-                        fontSize = 16.sp,
-                        fontWeight = if (selectedSection == section) FontWeight.Bold else FontWeight.Normal,
-                        color = if (selectedSection == section) Color.White else LightNavyBlue
+                        text = "Profile",
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold
+                        )
                     )
+                },
+                actions = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.gear),
+                        contentDescription = "Settings",
+                        tint = Color.Unspecified,
+                        modifier = Modifier
+                            .size(36.dp)
+                            .clickable { showMenu = true }
+                    )
+
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("UI Setting") },
+                            onClick = {
+                                showMenu = false
+                                onNavigateToUISetting()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Profile Setting") },
+                            onClick = {
+                                showMenu = false
+                                onNavigateToProfileSetting()
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Log Out") },
+                            onClick = {
+                                showMenu = false
+                                println("User logged out")
+                            }
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(12.dp)
+        ) {
+            ProfileInfo(user = user)
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+                    .border(BorderStroke(1.dp, MaterialTheme.colorScheme.primary), RoundedCornerShape(8.dp)),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                listOf("Post", "Save", "Report", "Share").forEach { section ->
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { selectedSection = section }
+                            .background(
+                                if (selectedSection == section) MaterialTheme.colorScheme.primary else Color.Transparent,
+                                RoundedCornerShape(8.dp)
+                            )
+                            .padding(8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = section,
+                            fontSize = 16.sp,
+                            fontWeight = if (selectedSection == section) FontWeight.Bold else FontWeight.Normal,
+                            color = if (selectedSection == section) Color.White else LightNavyBlue
+                        )
+                    }
                 }
             }
-        }
 
-        // Dynamic Content
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp) // Match the padding of the section tabs
-                .border(BorderStroke(1.dp, LightNavyBlue), RoundedCornerShape(8.dp)) // Add border
-                .padding(16.dp) // Inner padding
-        ) {
-            when (selectedSection) {
-                "Post" -> {
-                    val samplePosts = ExamplePost.getUserPost()
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(samplePosts) { post ->
-                            PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
-                            HorizontalDivider(thickness = 1.dp, color = Color.Gray) // Add splitter
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+                    .border(BorderStroke(1.dp, MaterialTheme.colorScheme.primary), RoundedCornerShape(8.dp))
+                    .padding(16.dp)
+            ) {
+                when (selectedSection) {
+                    "Post" -> {
+                        val samplePosts = ExamplePost.getUserPost()
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(samplePosts) { post ->
+                                PostItemHorizontal(post = post, onNavigateToComment = onNavigateToComment)
+                                HorizontalDivider(thickness = 1.dp, color = Color.Gray)
+                            }
                         }
                     }
                 }
@@ -183,7 +182,7 @@ fun ProfileInfo(user: User) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .border(BorderStroke(1.dp, LightNavyBlue), RoundedCornerShape(8.dp))
+            .border(BorderStroke(1.dp, MaterialTheme.colorScheme.primary), RoundedCornerShape(8.dp))
     ) {
         Row(
             modifier = Modifier

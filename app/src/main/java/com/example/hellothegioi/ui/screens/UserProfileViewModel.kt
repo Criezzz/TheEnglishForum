@@ -3,70 +3,12 @@ package com.example.hellothegioi.ui.screens
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.mutableStateListOf
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import java.io.File
-import com.example.hellothegioi.data.model.Question
-import android.util.Log
 import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.repository.ExampleUser
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.io.FileReader
-import java.io.InputStreamReader
-
-class QuestionViewModel(application: Application) : AndroidViewModel(application) {
-    private val _questions = mutableStateListOf<Question>()
-    val questions: List<Question> get() = _questions
-
-    init {
-        loadQuestionsFromJson()
-    }
-//
-//    private fun loadQuestionsFromJson() {
-//        val context = getApplication<Application>().applicationContext
-//        val file = File(context.filesDir, "questions_saved.json")
-//
-//        if (file.exists()) {
-//            val reader = FileReader(file)
-//            val questionType = object : TypeToken<List<Question>>() {}.type
-//            val list: List<Question> = Gson().fromJson(reader, questionType)
-//            _questions.addAll(list)
-//            reader.close()
-//        } else {
-//            Log.wtf("loadQuestionsFromJson", "File not found!")
-//        }
-//    }
-    private fun loadQuestionsFromJson() {
-        val context = getApplication<Application>().applicationContext
-        val inputStream = context.assets.open("questions.json")
-        val reader = InputStreamReader(inputStream)
-        val questionType = object : TypeToken<List<Question>>() {}.type
-        val list: List<Question> = Gson().fromJson(reader, questionType)
-        _questions.addAll(list)
-}
-
-
-    fun getQuestionById(id: Int): Question? = _questions.find { it.id == id }
-
-    fun addAnswerToQuestion(questionId: Int, answer: String) {
-        val index = _questions.indexOfFirst { it.id == questionId }
-        if (index != -1) {
-            val question = _questions[index]
-            _questions[index] = question.copy(answers = question.answers + answer)
-            saveQuestionsToJson()
-        }
-    }
-
-    private fun saveQuestionsToJson() {
-        val json = Gson().toJson(_questions)
-        val context = getApplication<Application>().applicationContext
-        val file = File(context.filesDir, "questions_saved.json")
-        Log.wtf("done", file.path)
-        file.writeText(json)
-    }
-}
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
     var name = mutableStateOf("")
