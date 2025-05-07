@@ -1,5 +1,6 @@
 package com.example.hellothegioi.ui.screens
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ class QuestionViewModel_v2(private val repository: QuestionRepository) : ViewMod
     init {
         viewModelScope.launch {
             _uiState.value = UiState.Success
+            _answerResults.value = repository.loadSavedAnswers() // ✅ Lấy dữ liệu từ Repository
         }
     }
 
@@ -69,13 +71,14 @@ class QuestionViewModel_v2(private val repository: QuestionRepository) : ViewMod
         data class Incorrect(val correctAnswer: Int) : AnswerResult()
     }
 
-    class Factory : ViewModelProvider.Factory {
+    class Factory(private val context: Context) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(QuestionViewModel_v2::class.java)) {
-                return QuestionViewModel_v2(QuestionRepository.getInstance()) as T
+                return QuestionViewModel_v2(QuestionRepository.getInstance(context)) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+
 }

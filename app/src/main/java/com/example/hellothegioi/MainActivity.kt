@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -175,7 +176,8 @@ class MainActivity : ComponentActivity() {
                             composable("search") { SearchScreen() }
 //                            composable("question") { QuestionScreen() }
                             composable("question") {
-                                val viewModel: QuestionViewModel_v2 = viewModel(factory = QuestionViewModel_v2.Factory())
+                                val context = LocalContext.current // Lấy context
+                                val viewModel: QuestionViewModel_v2 = viewModel(factory = QuestionViewModel_v2.Factory(context))
                                 DailyQuestionScreen(viewModel = viewModel)
                             }
                             composable("notification") { NotificationScreen(

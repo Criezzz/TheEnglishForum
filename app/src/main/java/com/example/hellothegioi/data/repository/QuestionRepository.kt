@@ -1,22 +1,30 @@
 package com.example.hellothegioi.data.repository
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.hellothegioi.data.model.Question
 import com.example.hellothegioi.data.model.WeeklyQuestions
+import com.example.hellothegioi.ui.screens.QuestionViewModel_v2
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
-class QuestionRepository {
-    // Dữ liệu mẫu
+class QuestionRepository(private val context: Context) {
+
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("question_answers", Context.MODE_PRIVATE)
+
     private val sampleQuestions = listOf(
         Question(
+            id = "1",
             content = "What's the correct meaning of 'endeavor'?",
             options = listOf("To try hard", "To give up", "To succeed", "To fail"),
             correctAnswerIndex = 0,
             Q = 1
         ),
         Question(
+            id = "2",
             content = "Which sentence uses the present perfect tense correctly?",
             options = listOf(
                 "I am living here since 2010.",
@@ -28,18 +36,21 @@ class QuestionRepository {
             Q = 2
         ),
         Question(
+            id = "3",
             content = "What's the antonym of 'benevolent'?",
             options = listOf("Kind", "Malevolent", "Generous", "Charitable"),
             correctAnswerIndex = 1,
             Q = 3
         ),
         Question(
+            id = "4",
             content = "Choose the correct spelling:",
             options = listOf("Accomodate", "Acommodate", "Accommodate", "Accomadate"),
             correctAnswerIndex = 2,
             Q = 4
         ),
         Question(
+            id = "5",
             content = "What is the correct order of adjectives?",
             options = listOf(
                 "Opinion - Size - Age - Shape - Color - Origin - Material - Purpose",
@@ -51,6 +62,7 @@ class QuestionRepository {
             Q = 5
         ),
         Question(
+            id = "6",
             content = "What does the idiom 'break the ice' mean?",
             options = listOf(
                 "To destroy something",
@@ -62,6 +74,7 @@ class QuestionRepository {
             Q = 6
         ),
         Question(
+            id = "7",
             content = "Which of these is a correct conditional sentence?",
             options = listOf(
                 "If I will see him, I will tell him.",
@@ -73,6 +86,7 @@ class QuestionRepository {
             Q = 7
         )
     )
+
 
     private val _weeklyQuestions = MutableStateFlow(
         WeeklyQuestions(
@@ -87,14 +101,10 @@ class QuestionRepository {
 
     init {
         loadTodayQuestion()
+        loadSavedAnswers() // ✅ Khôi phục trạng thái từ SharedPreferences
     }
 
     private fun loadTodayQuestion() {
-//        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-//        // Calendar.DAY_OF_WEEK starts with Sunday=1, so we adjust to match our data model
-//        val adjustedDay = if (currentDay == Calendar.SUNDAY) 7 else currentDay - 1
-//
-//        _todayQuestion.value = _weeklyQuestions.value.questions.find { it.Q == adjustedDay }
         _todayQuestion.value = getRandomQuestionForToday()
     }
 
@@ -109,42 +119,55 @@ class QuestionRepository {
             )
 
             currentQuestions[questionIndex] = updatedQuestion
-
             _weeklyQuestions.value = _weeklyQuestions.value.copy(questions = currentQuestions)
 
-            // Update today's question if it's the same
-            if (_todayQuestion.value?.id == questionId) {
-                _todayQuestion.value = updatedQuestion
-            }
+            saveUserAnswer(questionId, selectedAnswer) // ✅ Lưu câu trả lời vào SharedPreferences
         }
     }
 
+    private fun saveUserAnswer(questionId: String, selectedAnswer: Int) {
+        sharedPreferences.edit()
+            .putInt("${questionId}_answer", selectedAnswer)
+            .putBoolean("${questionId}_answered", true) // ✅ Lưu trạng thái đã trả lời
+            .apply()
+    }
+
+    private fun getUserAnswer(questionId: String): Pair<Int?, Boolean> {
+        val savedAnswer = sharedPreferences.getInt("${questionId}_answer", -1)
+        val isAnswered = sharedPreferences.getBoolean("${questionId}_answered", false)
+
+        return if (savedAnswer != -1) Pair(savedAnswer, isAnswered) else Pair(null, false)
+    }
+
+    fun loadSavedAnswers(): Map<String, QuestionViewModel_v2.AnswerResult> {
+        val savedResults = mutableMapOf<String, QuestionViewModel_v2.AnswerResult>()
+
+        _weeklyQuestions.value.questions.forEach { question ->
+            val (savedAnswer, isAnswered) = getUserAnswer(question.id)
+            if (savedAnswer != null) {
+                val result = if (savedAnswer == question.correctAnswerIndex) {
+                    QuestionViewModel_v2.AnswerResult.Correct
+                } else {
+                    QuestionViewModel_v2.AnswerResult.Incorrect(question.correctAnswerIndex)
+                }
+                savedResults[question.id] = result
+            }
+        }
+
+        return savedResults // ✅ Trả về Map cho ViewModel cập nhật
+    }
+
     fun getRandomQuestionForToday(): Question {
-//        val currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-//        // Calendar.DAY_OF_WEEK starts with Sunday=1, so we adjust to match our data model
-//        val adjustedDay = if (currentDay == Calendar.SUNDAY) 7 else currentDay - 1
-//
-//        // Get questions for the current day
-//        val todayQuestions = _weeklyQuestions.value.questions.filter { it.Q == adjustedDay }
-//
-//        return if (todayQuestions.isNotEmpty()) {
-//            // Return a random question or the first one
-//            todayQuestions.random()
-//        } else {
-//            // Fallback: return any random question
-//            _weeklyQuestions.value.questions.random()
-//        }
         return _weeklyQuestions.value.questions.random()
     }
 
-    // Singleton pattern
     companion object {
         @Volatile
         private var INSTANCE: QuestionRepository? = null
 
-        fun getInstance(): QuestionRepository {
+        fun getInstance(context: Context): QuestionRepository {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: QuestionRepository().also { INSTANCE = it }
+                INSTANCE ?: QuestionRepository(context).also { INSTANCE = it }
             }
         }
     }
