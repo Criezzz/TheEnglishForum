@@ -95,16 +95,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun loadProfile() {
         viewModelScope.launch {
-            // Always load from ExampleUser.student
-            val defaultUser = ExampleUser.student
-            name.value = defaultUser.name
-            username.value = defaultUser.username
-            age.value = defaultUser.age
-            role.value = defaultUser.role
-            gender.value = defaultUser.gender
-            level.value = defaultUser.level
-            email.value = defaultUser.email
-            isVerifiedTeacher.value = defaultUser.isVerifiedTeacher
+            // Load from CurrentUser instead of ExampleUser.student
+            val currentUser = CurrentUser.user ?: ExampleUser.student
+            name.value = currentUser.name
+            username.value = currentUser.username
+            age.value = currentUser.age
+            role.value = currentUser.role
+            gender.value = currentUser.gender
+            level.value = currentUser.level
+            email.value = currentUser.email
+            isVerifiedTeacher.value = currentUser.isVerifiedTeacher
         }
     }
 

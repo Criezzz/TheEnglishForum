@@ -23,23 +23,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.R
+import com.example.hellothegioi.data.model.CurrentUser
 import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
-import com.example.hellothegioi.ui.theme.LightNavyBlue
+import com.example.hellothegioi.data.repository.ExampleUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    user: User,
-    modifier: Modifier = Modifier,
     onNavigateToComment: (Post) -> Unit = {},
     onNavigateToProfileSetting: () -> Unit,
     onNavigateToUISetting: () -> Unit
 ) {
     var selectedSection by remember { mutableStateOf("Post") }
     var showMenu by remember { mutableStateOf(false) }
+    val currentUser = CurrentUser.user ?: ExampleUser.student
 
     Scaffold(
         topBar = {
@@ -103,7 +103,7 @@ fun ProfileScreen(
                 .padding(innerPadding)
                 .padding(12.dp)
         ) {
-            ProfileInfo(user = user)
+            ProfileInfo(user = currentUser)
 
             Card(
                 modifier = Modifier

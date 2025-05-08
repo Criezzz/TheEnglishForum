@@ -19,7 +19,7 @@ import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.ui.navigation.BottomNavigationBar
 import com.example.hellothegioi.ui.screens.CFInstructor
 import com.example.hellothegioi.ui.screens.CommentScreen
-import com.example.hellothegioi.ui.screens.CreateScreen
+import com.example.hellothegioi.ui.screens.CreateUserScreen
 import com.example.hellothegioi.ui.screens.DailyQuestionScreen
 import com.example.hellothegioi.ui.screens.ForgotPassword
 import com.example.hellothegioi.ui.screens.HelpScreen
@@ -102,9 +102,9 @@ class MainActivity : ComponentActivity() {
                                  )
                             }
                             composable("create") {
-                                CreateScreen(
-                                    onNavigateTologin = {
-                                    navController.navigate("login")
+                                CreateUserScreen(
+                                    onNavigateToLogin = {
+                                        navController.navigate("login")
                                     },
                                     onNavigateToInstructor = {
                                         navController.navigate("Cf")
@@ -191,7 +191,6 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("profile") {
                                 ProfileScreen(
-                                    user = userProfileViewModel.getUser(),
                                     onNavigateToComment = { post ->
                                         navController.currentBackStackEntry?.savedStateHandle?.set(
                                             "post",
@@ -200,7 +199,7 @@ class MainActivity : ComponentActivity() {
                                         navController.navigate("comment")
                                     },
                                     onNavigateToProfileSetting = {
-                                        navController.navigate("userProfile")
+                                        navController.navigate("user_profile")
                                     },
                                     onNavigateToUISetting = {
                                         navController.navigate("uiSetting")
@@ -216,9 +215,8 @@ class MainActivity : ComponentActivity() {
                                         println("text: $text and imageUri: $imageUri")
                                     }
                                 )
-
                             }
-                            composable("userProfile") {
+                            composable("user_profile") {
                                 UserProfileScreen(
                                     user = userProfileViewModel.getUser(),
                                     onBack = { navController.popBackStack("profile", inclusive = false) },

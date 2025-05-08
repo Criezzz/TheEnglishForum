@@ -1,53 +1,33 @@
 package com.example.hellothegioi.ui.screens
 
-
 import android.net.Uri
-import coil.compose.rememberAsyncImagePainter
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.example.hellothegioi.ui.theme.Montserrat
-import com.example.hellothegioi.ui.theme.NavyBlue
+import coil.compose.rememberAsyncImagePainter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CFInstructor(onNavigateToLogin : () -> Unit) {
+fun CFInstructor(onNavigateToLogin: () -> Unit) {
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     var showDialog by remember { mutableStateOf(false) }
     val launcher = rememberLauncherForActivityResult(
@@ -55,145 +35,225 @@ fun CFInstructor(onNavigateToLogin : () -> Unit) {
     ) { uri: Uri? ->
         selectedImageUri = uri
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "The English Forum",
-            style = TextStyle(
-                color = NavyBlue,
-                fontSize = 40.sp,
+
+    MaterialTheme(
+        colorScheme = lightColorScheme(
+            primary = Color(0xFF1976D2),
+            onPrimary = Color.White,
+            background = Color.White,
+            onBackground = Color.Black,
+            surface = Color.White,
+            onSurface = Color.Black,
+            error = Color(0xFFB00020),
+            onError = Color.White
+        ),
+        typography = Typography(
+            headlineLarge = TextStyle(
+                fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Normal,
-                fontFamily = Montserrat,
-                letterSpacing = 2.sp,
-                textAlign = TextAlign.Center
+                letterSpacing = 1.sp
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "Xác nhận tài khoản giáo viên",
-            style = TextStyle(
+            titleLarge = TextStyle(
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold
+            ),
+            titleMedium = TextStyle(
                 fontSize = 20.sp,
-                textAlign = TextAlign.Center
+                fontWeight = FontWeight.SemiBold
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 0.dp, bottom = 8.dp)
+            bodyLarge = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal
+            ),
+            labelLarge = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium
+            )
         )
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-
-                // 👉 Ẩn nút tải ảnh nếu đã chọn ảnh
-                if (selectedImageUri == null) {
-                    Box(
-                        modifier = Modifier
-                            .size(60.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .border(1.dp, Color.Gray, RoundedCornerShape(12.dp))
-                            .clickable { launcher.launch("image/*") },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Tải ảnh lên",
-                            tint = Color.Blue,
-                            modifier = Modifier.size(28.dp)
+    ) {
+        Scaffold(
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            text = "Xác nhận giáo viên",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.SemiBold,
+                                letterSpacing = 0.5.sp
+                            )
                         )
-                    }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = onNavigateToLogin) {
+                            Icon(
+                                Icons.Default.ArrowBack,
+                                contentDescription = "Back",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                        navigationIconContentColor = MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier.height(80.dp)
+                )
+            }
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(paddingValues)
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(40.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text("Tải ảnh lên", fontSize = 16.sp)
-                    Spacer(modifier = Modifier.height(18.dp))
+                // Title
+                Text(
+                    text = "Xác nhận tài khoản giáo viên",
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.sp
+                    ),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Description
+                Text(
+                    text = "Để đảm bảo chất lượng giảng dạy, vui lòng tải lên các giấy tờ xác minh của bạn.",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                    ),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(32.dp))
+
+                // Image Upload Section
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        if (selectedImageUri == null) {
+                            Box(
+                                modifier = Modifier
+                                    .size(120.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(12.dp))
+                                    .clickable { launcher.launch("image/*") },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = "Tải ảnh lên",
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(48.dp)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = "Tải ảnh lên",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+
+                        selectedImageUri?.let { uri ->
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Image(
+                                painter = rememberAsyncImagePainter(uri),
+                                contentDescription = "Ảnh đã chọn",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                            )
+                        }
+                    }
                 }
 
-                // 👉 Hiển thị ảnh đã chọn
-                selectedImageUri?.let { uri ->
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Image(
-                        painter = rememberAsyncImagePainter(uri),
-                        contentDescription = "Ảnh đã chọn",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                            .clip(RoundedCornerShape(8.dp))
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Submit button
+                Button(
+                    onClick = { showDialog = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text(
+                        text = "Xác nhận",
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
+                }
+
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog = false },
+                        title = {
+                            Text(
+                                text = "Xác nhận thông tin thành công",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        },
+                        text = {
+                            Text(
+                                text = "Bạn đã xác nhận thông tin thành công. Vui lòng chờ phản hồi.\n" +
+                                        "Bạn có thể đăng nhập với tư cách học viên để xem bài viết. Bạn có muốn trở lại đăng nhập không?",
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.fillMaxWidth(),
+                                textAlign = TextAlign.Center
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    showDialog = false
+                                    onNavigateToLogin()
+                                }
+                            ) {
+                                Text(
+                                    text = "OK",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(
+                                onClick = { showDialog = false }
+                            ) {
+                                Text(
+                                    text = "Huỷ",
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        },
+                        properties = DialogProperties(dismissOnClickOutside = false)
                     )
                 }
             }
-        }
-        Button(
-            onClick = { showDialog = true },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 8.dp)
-        ) {
-            Text(text = "Xác nhận", fontSize = 16.sp)
-        }
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = { showDialog = false },
-                title = {
-                    Text(
-                        text = "Xác nhận thông tin thành công",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                text = {
-                    Text(
-                        text = "Bạn đã xác nhận thông tin thành công vui lòng chờ phản hồi\n " +
-                                "Bây giờ bạn có thể đăng nhập với tư cách học viên để xem bài viết bạn có muốn trở lại đăng nhập không?",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            showDialog = false
-                            onNavigateToLogin()
-                        }
-                    ) {
-                        Text("OK")
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            showDialog = false
-                        }
-                    ) {
-                        Text("Huỷ")
-                    }
-                },
-                properties = DialogProperties(dismissOnClickOutside = false)
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Text(
-                text = "Trở lại đăng nhập?",
-                color = Color.Blue,
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .clickable { onNavigateToLogin() }
-            )
         }
     }
 }

@@ -144,7 +144,31 @@ fun SettingsScreen(
 
             // Preview Section
             SettingsSection(title = "Xem trước") {
-                PreviewCard(primaryColor)
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = "Ví dụ tiêu đề",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = primaryColor
+                        )
+                        Text(
+                            text = "Đây là văn bản mẫu để xem trước cài đặt typography và màu sắc của bạn.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Button(
+                            onClick = { },
+                            colors = ButtonDefaults.buttonColors(containerColor = primaryColor)
+                        ) {
+                            Text("Nút mẫu")
+                        }
+                    }
+                }
             }
         }
     }
@@ -257,34 +281,5 @@ fun FontWeightItem(
             text = option.displayName,
             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = option.weight)
         )
-    }
-}
-
-@Composable
-fun PreviewCard(primaryColor: Color) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Text(
-                text = "Ví dụ tiêu đề",
-                style = MaterialTheme.typography.titleLarge,
-                color = primaryColor
-            )
-            Text(
-                text = "Đây là văn bản mẫu để xem trước cài đặt typography và màu sắc của bạn.",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Button(
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(containerColor = primaryColor)
-            ) {
-                Text("Nút mẫu")
-            }
-        }
     }
 }
