@@ -5,7 +5,49 @@ import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.model.CurrentUser
 
-object ExamplePost{
+object ExamplePost {
+    private val teacherPosts = listOf(
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "Jane Smith",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 3,
+            title = "Teaching Tips",
+            text = "Here are some effective methods for teaching English to beginners. Let's discuss!",
+            image = R.drawable.image_test,
+            isDraft = false,
+            likes = 15
+        ),
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "Jane Smith",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            title = "Grammar Lesson",
+            text = "Today's grammar topic: Present Perfect vs Past Simple. Who needs help with this?",
+            isDraft = false,
+            likes = 12
+        )
+    )
+
+    private val studentPosts = listOf(
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "John Doe",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 2,
+            title = "Tự học Tiếng Anh",
+            text = "Mình đang luyện IELTS mỗi ngày. Các bạn có nguồn tài liệu nào hay không?",
+            isDraft = false,
+            likes = 5
+        ),
+        Post(
+            avatar = R.drawable.ic_user_avatar,
+            ownerName = "John Doe",
+            postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 1,
+            text = "Mọi người thích học qua phim hay nhạc hơn?",
+            isDraft = false,
+            likes = 5
+        )
+    )
+
     private val examplePosts = listOf(
         Post(
             avatar = R.drawable.ic_user_avatar,
@@ -57,25 +99,18 @@ object ExamplePost{
 
     fun getUserPost(): List<Post> {
         val currentUser = CurrentUser.user ?: return emptyList()
-        return listOf(
-            Post(
-                avatar = R.drawable.ic_user_avatar,
-                ownerName = currentUser.name,
-                postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 2,
-                title = "Tự học Tiếng Anh",
-                text = "Mình đang luyện IELTS mỗi ngày. Các bạn có nguồn tài liệu nào hay không?",
-                isDraft = false,
-                likes = 5
-            ),
-            Post(
-                avatar = R.drawable.ic_user_avatar,
-                ownerName = currentUser.name,
-                postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 1,
-                text = "Mọi người thích học qua phim hay nhạc hơn?",
-                isDraft = false,
-                likes = 5
-            )
-        )
+        
+        // Get the appropriate posts based on user role
+        val basePosts = if (currentUser.role == "Teacher") {
+            teacherPosts
+        } else {
+            studentPosts
+        }
+
+        // Update the owner name in all posts to match the current user
+        return basePosts.map { post ->
+            post.copy(ownerName = currentUser.name)
+        }
     }
 
     fun getAll(): List<Post> = examplePosts + getUserPost()

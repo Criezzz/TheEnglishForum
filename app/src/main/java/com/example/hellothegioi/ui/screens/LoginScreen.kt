@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.repository.ExampleUser
+import com.example.hellothegioi.data.model.CurrentUser
 
 private val LoginColorScheme = lightColorScheme(
     primary = Color(0xFF1976D2),
@@ -206,8 +207,12 @@ fun LoginScreen(
                     if (username.isEmpty() || password.isEmpty()) {
                         errorMessage = "Tên tài khoản hoặc mật khẩu không được để trống"
                     } else if (username == ExampleUser.student.username && password == ExampleUser.student.password) {
+                        // Set current user to student
+                        CurrentUser.user = ExampleUser.student
                         onNavigateToHome()
                     } else if (username == ExampleUser.teacher.username && password == ExampleUser.teacher.password) {
+                        // Set current user to teacher
+                        CurrentUser.user = ExampleUser.teacher
                         onNavigateToHome()
                     } else {
                         errorMessage = "Tên tài khoản hoặc mật khẩu không đúng"
