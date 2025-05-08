@@ -22,12 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.R
 import com.example.hellothegioi.data.model.Post
+import com.example.hellothegioi.data.model.CurrentUser
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> Unit) {
+    val currentUser = CurrentUser.user
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -86,7 +89,7 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
 
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    text = "NameUser",
+                                    text = currentUser?.name ?: "Guest",
                                     style = MaterialTheme.typography.bodyLarge
                                 )
 
