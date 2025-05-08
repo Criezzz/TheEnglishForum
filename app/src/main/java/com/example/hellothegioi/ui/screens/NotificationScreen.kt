@@ -1,9 +1,11 @@
 package com.example.hellothegioi.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.model.NotificationTarget
 import com.example.hellothegioi.data.repository.ExampleNotification
 
@@ -27,67 +30,92 @@ fun NotificationScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Thông báo",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold
+                        text = "Notification",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
                         )
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                modifier = Modifier.height(80.dp)
             )
-        },
-        content = { paddingValues ->
-            Box(
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    itemsIndexed(notifications) { _, notification ->
-                        Card(
+                itemsIndexed(notifications) { _, notification ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp)
+                            .clickable {
+                                when (notification.target) {
+                                    is NotificationTarget.Post -> onNavigateToComment(notification)
+                                    is NotificationTarget.ComposePage -> onNavigateToQuestion()
+                                }
+                            },
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        ),
+                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
+                        shape = RoundedCornerShape(12.dp),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    ) {
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .clickable {
-                                    when (notification.target) {
-                                        is NotificationTarget.Post -> onNavigateToComment(notification)
-                                        is NotificationTarget.ComposePage -> onNavigateToQuestion()
-                                    }
-                                },
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                                .padding(16.dp)
                         ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(text = notification.messenger)
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = notification.time,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.Gray
+                            Text(
+                                text = notification.messenger,
+                                style = MaterialTheme.typography.bodyLarge.copy(
+                                    fontWeight = FontWeight.Medium
                                 )
-                            }
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = notification.time,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         }
                     }
                 }
+            }
 
-                Button(
-                    onClick = {  },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 20.dp, bottom = 16.dp)
-                ) {
-                    Text("Xác nhận")
-                }
+            Button(
+                onClick = { },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 20.dp, bottom = 16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text(
+                    text = "Confirm",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
+                )
             }
         }
-    )
+    }
 }

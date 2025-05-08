@@ -29,16 +29,35 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF1976D2),
+    primary = LightNavyBlue,
     onPrimary = Color.White,
-    secondary = Color(0xFF03A9F4),
+    primaryContainer = LightNavyBlue.copy(alpha = 0.12f),
+    onPrimaryContainer = LightNavyBlue,
+    secondary = LightNavyBlue.copy(alpha = 0.7f),
     onSecondary = Color.White,
-    background = Color.White,
-    onBackground = Color.Black,
-    surface = Color.White,
-    onSurface = Color.Black,
-    surfaceVariant = Color(0xFFF5F5F5),
-    onSurfaceVariant = Color(0xFF666666)
+    secondaryContainer = LightNavyBlue.copy(alpha = 0.12f),
+    onSecondaryContainer = LightNavyBlue,
+    tertiary = LightNavyBlue.copy(alpha = 0.5f),
+    onTertiary = Color.White,
+    tertiaryContainer = LightNavyBlue.copy(alpha = 0.12f),
+    onTertiaryContainer = LightNavyBlue,
+    error = Color(0xFFB00020),
+    onError = Color.White,
+    errorContainer = Color(0xFFB00020).copy(alpha = 0.12f),
+    onErrorContainer = Color(0xFFB00020),
+    background = Color(0xFFFFF8E1), // Warm yellowish background
+    onBackground = Color(0xFF1C1B1F),
+    surface = Color(0xFFFFF8E1), // Warm yellowish surface
+    onSurface = Color(0xFF1C1B1F),
+    surfaceVariant = Color(0xFFF5F0E0), // Slightly darker warm variant
+    onSurfaceVariant = Color(0xFF49454F),
+    outline = Color(0xFF79747E),
+    outlineVariant = Color(0xFFCAC4D0),
+    scrim = Color.Black.copy(alpha = 0.32f),
+    inverseSurface = Color(0xFF313033),
+    inverseOnSurface = Color(0xFFF4EFF4),
+    inversePrimary = LightNavyBlue.copy(alpha = 0.8f),
+    surfaceTint = LightNavyBlue.copy(alpha = 0.05f)
 )
 
 @Composable

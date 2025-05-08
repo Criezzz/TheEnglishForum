@@ -1,8 +1,10 @@
 package com.example.hellothegioi.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,19 +41,21 @@ fun DailyQuestionScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Daily problem",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold
+                        text = "Daily Questions",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
                         )
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                modifier = Modifier.height(80.dp)
             )
         }
     ) { paddingValues ->
@@ -79,12 +83,16 @@ fun DailyQuestionScreen(
                 }
 
                 is QuestionViewModel_v2.UiState.Success -> {
-                    Column(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
                         // Today's Question Section
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp),
+                                .padding(bottom = 16.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer
                             )
@@ -135,28 +143,37 @@ fun DailyQuestionScreen(
                             text = "This Week's Questions",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
 
                         LazyColumn(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(vertical = 8.dp)
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            modifier = Modifier.padding(top = 8.dp)
                         ) {
                             items(weeklyQuestions.questions) { question ->
-                                WeeklyQuestionItem(
-                                    question = question,
-                                    answerResult = answerResults[question.id],
-                                    onClick = { }
-                                )
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                                    ),
+                                    shape = RoundedCornerShape(12.dp),
+                                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                                ) {
+                                    WeeklyQuestionItem(
+                                        question = question,
+                                        answerResult = answerResults[question.id],
+                                        onClick = { }
+                                    )
+                                }
                             }
                         }
                     }
 
-                    // Floating Action Button thủ công ở giữa đáy màn hình
+                    // Floating Action Button
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
+                        modifier = Modifier.fillMaxSize()
                     ) {
                         FloatingActionButton(
                             onClick = {
@@ -164,7 +181,8 @@ fun DailyQuestionScreen(
                             },
                             modifier = Modifier
                                 .align(Alignment.BottomCenter)
-                                .padding(bottom = 16.dp)
+                                .padding(bottom = 16.dp),
+                            containerColor = MaterialTheme.colorScheme.primary
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Star,
@@ -193,10 +211,6 @@ fun DailyQuestionScreen(
                         }
                     }
                 }
-
-                is QuestionViewModel_v2.UiState.Error -> TODO()
-                QuestionViewModel_v2.UiState.Loading -> TODO()
-                QuestionViewModel_v2.UiState.Success -> TODO()
             }
         }
     }

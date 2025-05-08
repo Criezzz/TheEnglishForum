@@ -17,8 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hellothegioi.ui.theme.FontWeightOption
 import com.example.hellothegioi.ui.theme.ThemeColorOptions
@@ -38,13 +40,27 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Cài đặt") },
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "Settings",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Quay lại")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = primaryColor,
+                    titleContentColor = Color.White,
+                    navigationIconContentColor = Color.White
+                ),
+                modifier = Modifier.height(80.dp)
             )
         }
     ) { paddingValues ->
@@ -52,7 +68,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
@@ -82,7 +98,9 @@ fun SettingsScreen(
                 ColorPicker(
                     colors = ThemeColorOptions,
                     selectedColor = primaryColor,
-                    onColorSelected = { viewModel.updatePrimaryColor(it) }
+                    onColorSelected = { color ->
+                        viewModel.updatePrimaryColor(color)
+                    }
                 )
             }
 
@@ -176,7 +194,9 @@ fun ColorPicker(
     onColorSelected: (Color) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         colors.forEach { color ->
@@ -197,7 +217,7 @@ fun ColorCircle(
 ) {
     Box(
         modifier = Modifier
-            .size(40.dp)
+            .size(48.dp)
             .clip(CircleShape)
             .background(color)
             .clickable(onClick = onClick)
@@ -206,7 +226,7 @@ fun ColorCircle(
         if (selected) {
             Box(
                 modifier = Modifier
-                    .size(16.dp)
+                    .size(20.dp)
                     .align(Alignment.Center)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.8f))
@@ -252,7 +272,8 @@ fun PreviewCard(primaryColor: Color) {
         ) {
             Text(
                 text = "Ví dụ tiêu đề",
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                color = primaryColor
             )
             Text(
                 text = "Đây là văn bản mẫu để xem trước cài đặt typography và màu sắc của bạn.",

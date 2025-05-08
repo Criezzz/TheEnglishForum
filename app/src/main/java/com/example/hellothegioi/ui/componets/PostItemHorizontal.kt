@@ -23,6 +23,7 @@ import com.example.hellothegioi.ui.theme.HellothegioiTheme
 import java.util.concurrent.TimeUnit
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.clickable
 
 @Composable
 fun PostItemHorizontal(
@@ -32,7 +33,11 @@ fun PostItemHorizontal(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .clickable { onNavigateToComment(post) }
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
@@ -65,7 +70,11 @@ fun PostItemHorizontal(
 
             Box {
                 IconButton(
-                    onClick = { expanded = true },
+                    onClick = { 
+                        expanded = true
+                        // Stop event propagation to prevent navigation
+                        true
+                    },
                     modifier = Modifier.offset(y = (-12).dp)
                 ) {
                     Icon(

@@ -6,6 +6,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hellothegioi.ui.theme.FontWeightOption
+import com.example.hellothegioi.ui.theme.LightNavyBlue
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -20,7 +21,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val primaryColor: StateFlow<Color> = settingsDataStore.primaryColor
-        .stateIn(viewModelScope, SharingStarted.Eagerly, Color.Unspecified)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, LightNavyBlue)
 
     val fontSize: StateFlow<Int> = settingsDataStore.fontSize
         .stateIn(viewModelScope, SharingStarted.Eagerly, 16)

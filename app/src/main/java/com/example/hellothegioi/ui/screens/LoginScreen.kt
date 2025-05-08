@@ -109,7 +109,8 @@ fun LoginScreen(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 ),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -118,9 +119,12 @@ fun LoginScreen(
             Text(
                 text = "Đăng nhập",
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.SemiBold
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 0.5.sp
                 ),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(48.dp))

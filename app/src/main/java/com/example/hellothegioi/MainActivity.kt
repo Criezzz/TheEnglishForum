@@ -35,26 +35,15 @@ import com.example.hellothegioi.ui.screens.SettingsScreen
 import com.example.hellothegioi.ui.screens.SettingsViewModel
 import com.example.hellothegioi.ui.screens.UserProfileScreen
 import com.example.hellothegioi.ui.screens.UserProfileViewModel
-import com.example.hellothegioi.ui.theme.HellothegioiTheme
+import com.example.hellothegioi.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Khởi tạo SettingsViewModel
             val settingsViewModel: SettingsViewModel = viewModel()
-
-            // Đọc các cài đặt từ SettingsViewModel
-            val isDarkTheme = settingsViewModel.isDarkTheme.collectAsState().value
-            val primaryColor = settingsViewModel.primaryColor.collectAsState().value
-            val fontSize = settingsViewModel.fontSize.collectAsState().value
-            val fontWeight = settingsViewModel.fontWeight.collectAsState().value
-            HellothegioiTheme (
-                darkTheme = isDarkTheme,
-                primaryColor = primaryColor,
-                fontSize = fontSize,
-                fontWeight = fontWeight
-            ){
+            
+            AppTheme(settingsViewModel = settingsViewModel) {
                 val navController = rememberNavController()
                 val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = currentBackStackEntry?.destination?.route

@@ -30,19 +30,21 @@ import com.example.hellothegioi.ui.componets.PostItemHorizontal
 fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> Unit) {
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(
                         text = "The English Forum",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
                         )
                     )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                modifier = Modifier.height(80.dp)
             )
         }
     ) { innerPadding ->
@@ -50,18 +52,19 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(12.dp)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
             val listpost = ExamplePost.getAll()
 
-            Box(
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(
-                        BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
-                        RoundedCornerShape(8.dp)
-                    )
-                    .padding(8.dp)
+                    .padding(vertical = 8.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
+                shape = RoundedCornerShape(12.dp)
             ) {
                 LazyColumn {
                     item {
@@ -96,8 +99,8 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                                         .padding(4.dp)
                                 ) {
                                     Text(
-                                        text = "Write in....",
-                                        color = Color.LightGray,
+                                        text = "What's on your mind?",
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         fontSize = 18.sp
                                     )
                                 }
@@ -114,25 +117,28 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_camera),
                                     contentDescription = "Add Photo",
-                                    modifier = Modifier.size(25.dp)
+                                    modifier = Modifier.size(25.dp),
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                             IconButton(onClick = { /* Handle picture */ }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_picture),
                                     contentDescription = "Add Emoji",
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                             IconButton(onClick = { /* Handle add */ }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_add),
                                     contentDescription = "Add",
-                                    modifier = Modifier.size(20.dp)
+                                    modifier = Modifier.size(20.dp),
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
-                        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
+                        Divider(color = MaterialTheme.colorScheme.outline)
                     }
 
                     items(listpost) { post ->
@@ -140,7 +146,7 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                             post = post,
                             onNavigateToComment = onNavigateToComment
                         )
-                        HorizontalDivider(thickness = 1.dp, color = Color.Gray)
+                        Divider(color = MaterialTheme.colorScheme.outline)
                     }
                 }
             }

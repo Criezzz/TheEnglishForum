@@ -1,77 +1,65 @@
 package com.example.hellothegioi.ui.screens
 
-import androidx.compose.material3.*
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import kotlinx.coroutines.launch
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.hellothegioi.data.model.User
-import com.example.hellothegioi.ui.screens.UserProfileViewModel
 import com.example.hellothegioi.data.model.CurrentUser
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserProfileScreen(
     user: User,
     onBack: () -> Unit,
-    onSave: (User) -> Unit // Add the onSave parameter
+    onSave: (User) -> Unit
 ) {
     val viewModel: UserProfileViewModel = viewModel()
-
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Hồ sơ cá nhân") },
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "User Profile",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 0.5.sp
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { onBack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                modifier = Modifier.height(80.dp)
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
@@ -86,7 +74,7 @@ fun UserProfileScreen(
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                border = BorderStroke(1.dp, Color(0xFF1976D2)),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -100,7 +88,7 @@ fun UserProfileScreen(
                         modifier = Modifier
                             .size(100.dp)
                             .clip(CircleShape)
-                            .background(Color.LightGray)
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
                             .padding(16.dp)
                     )
 
@@ -164,28 +152,30 @@ fun UserProfileScreen(
                         OutlinedButton(onClick = { /* Đổi mật khẩu */ }) {
                             Text("Đổi mật khẩu")
                         }
-                        Button(onClick = {
-                            val updatedUser = User(
-                                name = viewModel.name.value,
-                                username = user.username, // Keep immutable fields
-                                age = viewModel.age.value,
-                                role = viewModel.role.value,
-                                gender = viewModel.gender.value,
-                                level = viewModel.level.value,
-                                email = viewModel.email.value,
-                                isVerifiedTeacher = viewModel.isVerifiedTeacher.value,
-                                follower = user.follower,
-                                following = user.following,
-                                bio = user.bio,
-                                password = user.password // Keep immutable fields
-                            )
-                            onSave(updatedUser) // Call onSave with the updated user
-                            CurrentUser.user = updatedUser
-                            coroutineScope.launch {
-                                snackbarHostState.showSnackbar("Lưu thành công!")
+                        Button(
+                            onClick = {
+                                val updatedUser = User(
+                                    name = viewModel.name.value,
+                                    username = user.username,
+                                    age = viewModel.age.value,
+                                    role = viewModel.role.value,
+                                    gender = viewModel.gender.value,
+                                    level = viewModel.level.value,
+                                    email = viewModel.email.value,
+                                    isVerifiedTeacher = viewModel.isVerifiedTeacher.value,
+                                    follower = user.follower,
+                                    following = user.following,
+                                    bio = user.bio,
+                                    password = user.password
+                                )
+                                onSave(updatedUser)
+                                CurrentUser.user = updatedUser
+                                coroutineScope.launch {
+                                    snackbarHostState.showSnackbar("Profile saved successfully!")
+                                }
                             }
-                        }) {
-                            Text("Lưu")
+                        ) {
+                            Text("Save")
                         }
                     }
                 }
@@ -193,6 +183,8 @@ fun UserProfileScreen(
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExposedDropdownField(
     label: String,
