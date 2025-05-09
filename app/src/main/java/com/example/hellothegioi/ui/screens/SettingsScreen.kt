@@ -25,6 +25,9 @@ import androidx.navigation.NavController
 import com.example.hellothegioi.ui.theme.FontWeightOption
 import com.example.hellothegioi.ui.theme.ThemeColorOptions
 import com.example.hellothegioi.ui.screens.SettingsViewModel
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -216,13 +219,14 @@ fun ColorPicker(
     selectedColor: Color,
     onColorSelected: (Color) -> Unit
 ) {
-    Row(
+    LazyRow(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp)
     ) {
-        colors.forEach { color ->
+        items(colors) { color ->
             ColorCircle(
                 color = color,
                 selected = color == selectedColor,

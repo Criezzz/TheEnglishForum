@@ -207,27 +207,6 @@ fun DailyQuestionScreen(
                         }
                     }
 
-                    // Floating Action Button
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        FloatingActionButton(
-                            onClick = {
-                                // TODO: FAB Action
-                            },
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter)
-                                .padding(bottom = 16.dp),
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Star,
-                                contentDescription = "Rewards",
-                                tint = Color.Yellow
-                            )
-                        }
-                    }
-
                     // Modal Bottom Sheet for Question Flashcard
                     if (showFlashcard && selectedQuestion != null) {
                         ModalBottomSheet(
