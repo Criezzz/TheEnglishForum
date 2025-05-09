@@ -29,6 +29,9 @@ import com.example.hellothegioi.data.model.User
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
 import com.example.hellothegioi.data.repository.ExampleUser
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +96,9 @@ fun ProfileScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .fillMaxWidth()
             )
         }
     ) { innerPadding ->

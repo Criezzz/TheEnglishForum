@@ -91,8 +91,7 @@ fun HelpScreen(onNavigateToLogin: () -> Unit = {}) {
                         containerColor = MaterialTheme.colorScheme.background,
                         titleContentColor = MaterialTheme.colorScheme.primary,
                         navigationIconContentColor = MaterialTheme.colorScheme.primary
-                    ),
-                    modifier = Modifier.height(80.dp)
+                    )
                 )
             }
         ) { paddingValues ->

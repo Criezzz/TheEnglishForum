@@ -18,6 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.data.model.NotificationTarget
 import com.example.hellothegioi.data.repository.ExampleNotification
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,7 +47,9 @@ fun NotificationScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .fillMaxWidth()
             )
         }
     ) { paddingValues ->

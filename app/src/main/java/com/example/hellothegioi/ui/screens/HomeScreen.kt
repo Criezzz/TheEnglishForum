@@ -25,6 +25,9 @@ import com.example.hellothegioi.data.model.Post
 import com.example.hellothegioi.data.model.CurrentUser
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +50,9 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .fillMaxWidth()
             )
         }
     ) { innerPadding ->
@@ -66,7 +71,9 @@ fun HomeScreen(onNavigateToNewPost: () -> Unit, onNavigateToComment: (Post) -> U
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 ),
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.outline),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 2.dp
+                ),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 LazyColumn {

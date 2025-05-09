@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.example.hellothegioi.R
 import com.example.hellothegioi.data.repository.ExamplePost
 import com.example.hellothegioi.ui.componets.PostItemHorizontal
+import androidx.compose.foundation.layout.WindowInsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,7 +61,9 @@ fun SearchScreen() {
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .windowInsetsPadding(WindowInsets.statusBars)
+                    .fillMaxWidth()
             )
         }
     ) { innerPadding ->

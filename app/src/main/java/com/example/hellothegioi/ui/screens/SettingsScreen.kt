@@ -59,8 +59,7 @@ fun SettingsScreen(
                     containerColor = primaryColor,
                     titleContentColor = Color.White,
                     navigationIconContentColor = Color.White
-                ),
-                modifier = Modifier.height(80.dp)
+                )
             )
         }
     ) { paddingValues ->

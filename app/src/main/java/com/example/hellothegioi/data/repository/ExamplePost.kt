@@ -42,6 +42,7 @@ object ExamplePost {
             avatar = R.drawable.ic_user_avatar,
             ownerName = "John Doe",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 1,
+            title = "Learning Methods",
             text = "Mọi người thích học qua phim hay nhạc hơn?",
             isDraft = false,
             likes = 5
@@ -63,7 +64,7 @@ object ExamplePost {
             avatar = R.drawable.ic_user_avatar,
             ownerName = "Davit",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
-            title = "Today's question!",
+            title = "Riddle Time",
             text = "What can you never see but is constantly right in front of you?",
             isDraft = false,
             likes = 2
@@ -72,6 +73,7 @@ object ExamplePost {
             avatar = R.drawable.ic_user_avatar,
             ownerName = "Trần Công",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            title = "Looking for English Centers",
             text = "Mọi người cho mình hỏi 1 số trung tâm tiếng anh uy tín với ạ!",
             image = R.drawable.image_test,
             isDraft = false,
@@ -90,6 +92,7 @@ object ExamplePost {
             avatar = R.drawable.ic_user_avatar,
             ownerName = "Michael",
             postTimeMillis = System.currentTimeMillis() - 3600 * 1000 * 4,
+            title = "Motivation Needed",
             text = "I am lazy to learn English",
             image = R.drawable.image_test,
             isDraft = false,

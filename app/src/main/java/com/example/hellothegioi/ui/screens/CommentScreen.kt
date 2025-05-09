@@ -52,8 +52,7 @@ fun CommentScreen(post: Post, onBack: () -> Unit) {
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                     navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                modifier = Modifier.height(80.dp)
+                )
             )
         }
     ) { innerPadding ->

@@ -58,8 +58,7 @@ fun UserProfileScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary,
                     navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                modifier = Modifier.height(80.dp)
+                )
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
