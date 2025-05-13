@@ -76,6 +76,7 @@ fun LoginScreen(
         var username by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var isFocused by remember { mutableStateOf(false) }
+        var errocount by remember { mutableStateOf(0) }
         var errorMessage by remember { mutableStateOf("") }
 
         Column(
@@ -210,6 +211,7 @@ fun LoginScreen(
                 onClick = {
                     if (username.isEmpty() || password.isEmpty()) {
                         errorMessage = "Tên tài khoản hoặc mật khẩu không được để trống"
+                        errocount++
                     } else if (username == ExampleUser.student.username && password == ExampleUser.student.password) {
                         // Set current user to student
                         CurrentUser.user = ExampleUser.student
@@ -220,6 +222,7 @@ fun LoginScreen(
                         onNavigateToHome()
                     } else {
                         errorMessage = "Tên tài khoản hoặc mật khẩu không đúng"
+                        errocount++
                     }
                 },
                 modifier = Modifier
@@ -240,6 +243,33 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+                        if (errocount > 2) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.End, 
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Bạn cần trợ giúp?",
+                        color = Color.Red, // màu chữ
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    TextButton(
+                        onClick = { onNavigateToHelp() }
+                    ) {
+                        Text(
+                            text = "Help",
+                            color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.labelLarge.copy(
+                                fontWeight = FontWeight.Medium
+                            )
+                        )
+                    }
+                }
+            }
             // Help and Forgot Password links
             Row(
                 modifier = Modifier.fillMaxWidth(),
