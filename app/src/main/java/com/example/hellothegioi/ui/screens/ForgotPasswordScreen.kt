@@ -95,7 +95,9 @@ fun ForgotPassword(
                         titleContentColor = MaterialTheme.colorScheme.primary,
                         navigationIconContentColor = MaterialTheme.colorScheme.primary
                     ),
-                    modifier = Modifier.height(80.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
                 )
             }
         ) { paddingValues ->
